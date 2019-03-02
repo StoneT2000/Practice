@@ -506,36 +506,11 @@ If $b < b_3 \le c​$ then $S(A[b_3…c]) < S(A[b…c])​$, and so if the new m
 
 Knowing the above, we now have that the maximum subarray of $A[1…j+1]$ is either $A[b…c]$, or $A[b…j+1]$ or $A[i…j+1]$ where $i > c$.
 
-It will now be shown that the maximum subarray of the form $A[i…j+1]$ must either be $A[j+1]$ or the max subarray of $A[c+1….j]$ with $A[j+1]$ added to it.
+It will now be shown that the maximum subarray of the form $A[i…j+1]$ must either be $A[j+1]$ or the max subarray of $A[c+1….j]$ with $A[j+1]​$ added to it.
 
+Suppose the maximum subarray of $A[c+1…j]$ is $A[d…j]$ where $c+1 \le d$. The leftmost element index of the maximum subarray of $A[c+1…j+1]$ must be $d$ or $j+1$. If the index $d_1 < d$, then the maximum subarray of $A[c+1…j]$ would not be $A[d…j]$, it would be $A[d_1…j]$ as $S(A[d_1…d-1]) > 0$. If the leftmost element index was $d_2 > d, d_2 \not= j+1$, the maximum subarray of $A[c+1….j]$ would be $A[d_2…j]$ as $S(A[d…d_2-1]) <0$. Thus, we reduce the possible maximum subarrays of the form $A[i…j+1]$ to only two possibilities, $A[j+1]$, or the max subarray of $A[c+1…j]$ that contains $A[j]$ and has the element $A[j+1]$ appended to it.
 
-
-By keeping track of a value $rightsum = S(A[c+1…j])​$, we can determine what the next maximum subarray is now.
-
-Note that $rightsum \not> 0​$. If it were, then the maximum subarray of $A[1…j] = A[b…j], ​$not $A[b…c]​$, a contradiction.
-
-At this point $rightsum \le 0$, if $rightsum + A[j+1] > 0​$, then 
-$$
-S(A[b…j+1]) = S(A[b…c]) + rightsum + A[j+1] > S(A[b…c])
-$$
-
-So we have a possible new maximum subarray $A[b…j+1]$ of the array $A[1…j+1]$
-
-We will use the fact that $rightsum \not> 0$ to show that $A[i…j+1]$ is a possible new maximum subarray only if $i = j+1$
-
-When $i < j+1​$, suppose for the sake of contradiction only $A[i…j+1]​$ is a possible new maximum subarray and that $A[j+1…j+1]​$ is not .
-
-Between the $cth$ iteration and the end of the $jth$ iteration, $rightsum$ must have always been $\le 0$ or else the maximum subarray of $A[1…j]$ would not be $A[b…c]$ as shown previously. Additionally $A[d] \le S(A[b…c])$ where $c+1 \le d \le j$ as we assume that at each $jth$ iteration, $A[j+1…j+1]$ isn't  the next maximum subarray.
-
-$rightsum = S(A[c+1…j])​$, this implies $A[c+1] \le 0​$  
-
-
-
-Knowing that the new max subarray leftmost element index 
-
-
-
-
+To conclude, at the $jth$ iteration, the next maximum subarray given that the maximum subarray of $A[1…j] = A[b…c]$ must be one of $A[j+1]$, $A[b…c]$, or the max subarray of $A[c+1…j] = A[k…j]$ that contains $A[j]$ and has the element $A[j+1]$ appended to it. This is reflected in the pseudocode below, where we first determine which of either $S(A[k…j]) + A[j+1]$ or $A[j+1]$ is larger (rightsum < 0) and then determine if it is larger than the current maximum sum of the current maximum subarray at the $jth$ iteration.
 
 ```pseudocode
 FIND-MAXIMUM-SUBARRAY(A)
@@ -559,21 +534,5 @@ for j = 2 to n
 		currentMax = rightsum
 return (b, c, currentMax)	
 ```
-
-Loop Invariant for the for loop is that the maximum subarray either the maximum subarray of $A[1…j]$ or a subarray $A[i…j+1]$ for $1 \le i \le j+1​$
-
-
-
-**Initiation**
-
-
-
-**Maintenance**
-
-
-
-**Termination**
-
-
 
 
