@@ -1,0 +1,34 @@
+<script src="data_structures/Comparator.js"></script>
+<script src="data_structures/heap/heap.js"></script>
+<script src="data_structures/priority_queue/priority_queue.js"></script>
+<script src="data_structures/graph/graph.js"></script>
+<script>
+  var maxheap = new MaxHeap();
+  maxheap.add(1);
+  maxheap.add(23);
+  maxheap.add(31);
+  maxheap.add(16);
+  maxheap.add(16);
+  maxheap.add(16);
+  maxheap.add(16);
+  maxheap.add(2);
+  maxheap.add(31);
+  
+  var priorityQueue = new PriorityQueue();
+  priorityQueue.add(1, 0);
+  priorityQueue.add(23, 1);
+  priorityQueue.add(31, 2);
+  priorityQueue.add(13, 3);
+  priorityQueue.add(16, 4);
+  priorityQueue.add(2, 5);
+  priorityQueue.add(3, 1);
+  
+  
+  var mat = [
+    [0, 1, 1],
+    [1, 0, 1],
+    [1, 1, 0]
+  ]
+  var vertices = {0: new Vertex(0), 1: new Vertex(1), 2: new Vertex(2)}
+  var graph = new GraphA(mat);
+</script>
