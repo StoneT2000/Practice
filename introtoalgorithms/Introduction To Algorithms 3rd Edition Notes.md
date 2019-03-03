@@ -22,11 +22,13 @@ $\Omega(g(n))=​$$\{f(n):\exists c,n_0 > 0 \text{ such that } 0 \leq cg(n) \leq
 
 Example of asymptotically tightness: $3n^3 + 3n-3 = O(n^3)​$ is tight if $3n^3+3n-3 = \Theta(n^3)​$ as well, true due to the following
 
-$c_1n^3\leq 3n^3 + 3n - 3\leq c_2n^3 \implies c_1\leq 3 + \frac{3}{n^2} - \frac{3}{n^3} \leq c_2$. As $c_1,c_2$ are constant and tightly bound a function above and below, we have that $3n^3 + 3n - 3 = O(n^3)$ is tight.![relativegrowthrates](/Users/stone.tao/Desktop/Coding/Practice/JS/introtoalgorithms/assets/relativegrowthrates.png)
+$c_1n^3\leq 3n^3 + 3n - 3\leq c_2n^3 \implies c_1\leq 3 + \frac{3}{n^2} - \frac{3}{n^3} \leq c_2$. As $c_1,c_2$ are constant and tightly bound a function above and below, we have that $3n^3 + 3n - 3 = O(n^3)$ is tight.
 
-The statement $f(n) = O(g(n))$ merely claims that some constant multiple of $g(n)$ is an upper bound for $f(n)​$, with no claims as to how tight the bound is.
+![relativegrowthrates](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/relativegrowthrates.png)
 
-Saying that the running time of $f(n)$ is $O(n^2)$ usually means the worst case running time is $O(n^2)$ as that statement applies for any input of size $n​$.
+The statement $f(n) = O(g(n))$ merely claims that some constant multiple of $g(n)$ is an upper bound for $f(n)$, with no claims as to how tight the bound is.
+
+Saying that the running time of $f(n)$ is $O(n^2)$ usually means the worst case running time is $O(n^2)$ as that statement applies for any input of size $n$.
 
 Saying that the running time of $f(n)$ is $\Omega(n^2)$ usually means the best case running time is $\Omega(n^2)$ as that statement applies for any input of size $n$.
 
@@ -171,4 +173,96 @@ $\lg^*n$ (log star of $n$) denotes the iterated logarithm function
 $\lg^*n = \min\{ i \geq 0 : \lg^{(i)}n \leq 1\}$; So $\lg^*2 = 1, \lg^*16 = 3​$ (lg(lg(lg(16))) = 1)
 
 
+
+## 4 Divide-And-Conquer
+
+We divide and conquer a problem by performing the 3 steps at each of level of recursion
+
+**Divide** the problem into a number of subproblems that are smaller instances of the same problem.
+
+**Conquer** the subproblems by solving them recursively. If the subproblem sizes are small enough, however, just solve the subproblems in a straightforward manner.
+
+**Combine** the solutions to the subproblems into the solution for the original problem.
+
+When subproblems are large enough to solve recursively, it is called **recursive case**
+
+When subproblems are small enough such that we don't recurse, the recursion **bottoms out** and we have gotten down to the **base case**.
+
+Merge-sort is a classic example of using divid-and-conquer and its worst case running time $T(n)$ is 
+$$
+T(n) =
+\begin{cases} 
+\Theta(1) & \text{if } n=1 \\
+2T(n/2) + \Theta(n) & \text{if } n>1 \\
+\end{cases}
+$$
+Of which it can be shown that $T(n) = \Theta(n\lg{n})$
+
+Three main methods for obtaining an $\Theta$ or $O$ bound on an algorithm.
+
+- **Substitution method** guesses a bound and then utilizes induction to prove the guess is correct.
+
+- **Recursion-tree method** converts the recurrence into a tree whose nodes represent the costs incurred at different levels of the recursion. Through summations, the bounds can be found.
+
+- **Master method** provides bounds for recurrences of the form $T(n) = aT(n/b) + f(n)$
+
+  where $a \ge 1,\ b>1,$ and $f(n)$ is a given function. For divide and conquer, that would characterize dividing a problem into $a$ sub problems of size $1/b$ of the original problem, of which dividing and combining takes $f(n)$ time.
+
+#### Technicalities in recurrences
+
+Sometimes you can divide into a even sized sub problems or an integral sized sub problem, such as an odd input and using merge-sort. Additionally, boundary conditions, such as the solution to the recurrence for say $n<2$ that differ from the general solution are typically ignored.
+
+These conditions are generally ignored as they won't change the run time by more than a constant factor, and thus bounds on the order of growth remain the same.
+
+When solving recurrences, we omit floors, ceilings, and boundary conditions and determine later if they matter or not. Usually they don't, but its important to recognize when they do, of which experience and some theorems help with.
+
+### 4.1 Maximum-Subarray Problem
+
+The problem asks to find the contiguous subarray $A[b…c]$ of $A$ that has the largest array sum, where the array sum of $A[b…c]$ is $A[b]+A[b+1]+…+A[c]$.
+
+A brute force method would compute the sum of all $n\choose2$ possible contiguous subarrays and find the maximum one. This clearly runs in $\Theta(n^2)$ time.
+
+#### Divide and Conquer Solution
+
+We divide the array into two halves, $A[low…mid],\ A[mid+1…high]$
+
+We observe that any contiguous subarray $A[i…j]$ of $A[low…high]$, and thus the maximum subarray of $A[low…high]$ must be in the following
+
+- Entirely in the $A[low…mid]$
+- Entirely in $A[mid+1…high]$
+- Crosses the midpoint, so $low \le i \le mid \le j \le high$
+
+We can find the maximum subarray of $A[low…mid], \ A[mid+1…high]$ recursively as these are subproblems
+
+However, finding the maximum subarray that crosses the midpoint is a different problem.
+
+![Screen Shot 2019-03-02 at 5.04.02 PM](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/Screen Shot 2019-03-02 at 5.04.02 PM.png)
+
+It can be approached by finding the maximum subarray of $A[i…mid]​$ and $A[mid+1…j]​$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]​$ and $A[mid+1]​$, we can solve this in $\Theta(n)​$ time.
+
+So a recursive solution can be done by finding the maximum subarray of $A[low…mid]$ and $A[mid+1…high]$ where $mid = floor((low+high)/2)$, and the maximum subarray of the arrays that cross the midpoint. Which ever of those maximum subarrays have the highest sum is then returned at each recursive step.
+
+We can compute the worst case run time $T(n)$ as follows
+
+At each recursive step, we compute the max subarray of $A[low..mid], \ A[mid+1…high]$, so that takes $2T(n/2)$ time. We also compute the maximum crossing subarray, which takes $\Theta(n)$ time. There are probably some other constant time factors, so we also add a $\Theta(1)$ (Such as checking which of the maximum subarrays has the higher array sum)
+
+Thus, $T(n) = 2T(n/2)  + \Theta(n) + \Theta(1) = 2T(n/2)  + \Theta(n) $
+$$
+T(n) =
+\begin{cases} 
+\Theta(1) & \text{if } n=1 \\
+2T(n/2) + \Theta(n) & \text{if } n>1 \\
+\end{cases}
+$$
+Which is equivalent to the merge-sort algorithm, and so clearly finding the maximum subarray in this way will be $\Theta(n\lg{n})$
+
+### 4.2 Strassen's Algorithm for Matrix Multiplication
+
+A naive implementation of an algorithm to multiply two $n \times n$ matrices would take $\Theta(n^3)$ time as there are $n^2$ entries, and each entry is the sum of $n$ values, leading to a triply nested loop algorithm that takes $\Theta(n^3)$ time.
+
+In fact, this can be sped up by using divide and conquer.
+
+#### Simple divide and conquer solution
+
+For now, assume $n$ is a power of 2. For computing $C = A \cdot B$, consider a 4-way partition of them
 
