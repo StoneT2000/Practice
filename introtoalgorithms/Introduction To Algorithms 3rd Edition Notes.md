@@ -420,13 +420,33 @@ So now we can complete the inductive proof by showing that for a $c$, $T(2) \le 
 
 Turns out $c \ge 2$ is sufficient for base cases $n=2,3$ to hold.
 
-#### Making a good guess
+**Making a good guess**
 
 There's no good way. It takes experience and creativity and looking for patterns or connections with known bounds helps.
 
-E.g it's obvious to guess that $T(n) = 2T(n + 17) + n$ is bounded by $\Theta(n \lg{n})$ as the $+17$ term becomes less important as $n$ grows larger. So the problem reduces down to one whose answer is known.
+E.g it's obvious to guess that $T(n) = 2T(n + 17) + n$ is bounded by $\Theta(n \lg{n})$ as the $+17$ term becomes less important as $n$ grows larger. So the problem reduces down to one whose answer is known.
 
- 
+We may also first upper bound it and then lower bound it, and then eventually restrict the bounds to get an asymptotically tight one.
+
+**Subtleties**
+
+Remember the induction paradox? It applies here. Sometimes proving a stronger bound makes the math work out better e.g bounding by $cn-d$ for $d \ge 0$ instead of $cn$.
+
+**Avoiding Pitfalls**
+
+Consider 
+$$
+\begin{eqnarray}
+T(n) & = &  2(c(\lfloor n/2 \rfloor)) + n \\
+& \le & cn + n \\
+& = & O(n)
+\end{eqnarray}
+$$
+The above is wrong, we as we have no proved that $T(n)$ is less than the exact form of what was assumed, which in this case we assumed $T(n) \le cn$
+
+ **Changing Variables**
+
+Sometimes you can manipulate variables a bit to get a recognizable relation.
 
 
 

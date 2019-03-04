@@ -569,7 +569,7 @@ return C
 	
 ```
 
-It should be noted that at line 4, it is much better to set when $n \le N$, where $N$ could be 1024, we should then compute $C$ with a the classic $\Theta(n^3)$ non-recursive algorithm as this would involve less function calls and a lot less operations of just adding and subtracting.
+It should be noted that at line 4, it is much better to set when $n \le N$, where $N$ could be 1024, we should then compute $C$ with a the classic $\Theta(n^3)$ non-recursive algorithm as this would involve less function calls and a lot less operations of just adding and subtracting.
 
 #### 4.2-3
 
@@ -613,4 +613,97 @@ Note that $A-ac-bd = ad + bc$, giving us the imaginary component
 Computing $ac-bd$ then gives us the real component
 
 $\square$
+
+#### 4.3-1
+
+We guess that $T(n) \le cn^2$
+$$
+\begin{eqnarray}
+T(n) & = & T(n-1) +n \\
+& \le & c(n-1)^2 + n\\
+& = & cn^2-2cn+c+n\\
+& = & cn^2 - n(2c-1) + c \\
+& \le & cn^2
+\end{eqnarray}
+$$
+With the last line true provided that $c \ge 1$
+
+#### 4.3-7
+
+Consider $T(n) = 4T(n/3) + n = \Theta(n^{\log_3{4}})$, known by the master theorem
+
+If we guess that $T(n) \le cn^{\log_3{4}}$
+$$
+\begin{eqnarray}
+T(n) & = & 4T(n/3) + n \\
+& \le & 4(c(n/3)^{\log_3{4}})+n \\
+& = & 4c(\frac{n^{\log_3{4}}}{4}) + n \\
+& = & cn^{\log_3{4}} + n \\
+& \not\le & cn^{\log_3{4}}
+
+\end{eqnarray}
+$$
+So, this doesn't show anything.
+
+Suppose we guess that $T(n) \le cn^{\log_3{4}}-dn$
+$$
+\begin{eqnarray}
+T(n) & = & 4T(n/3) + n \\
+& \le & 4(c(n/3)^{\log_3{4}}-d(n/3))+n \\
+& = & 4(c\frac{n^{\log_3{4}}}{4}-dn/3) + n \\
+& = & cn^{\log_3{4}} -4dn/3+ n \\
+& \le & cn^{\log_3{4}} - dn
+\end{eqnarray}
+$$
+Which is true provided that $d \ge 3$
+
+If $T(1) = 1$, then $c \ge 4$ as $4\cdot 1^{\log_3{4}} - 3 \cdot 1 = 1$
+
+Thus, we can choose $n_0 = 1, c = 4$
+
+#### 4.3-8
+
+Consider $T(n) = 4T(n/2) + n^2 = \Theta(n^2\lg(n))$, known by the master theorem. (Book might be wrong, it says it's n^2 but I can't seem to show that works. Substituting n^2lg(n) works though).
+
+Guessing that $T(n) \le cn^2\lg{n}$
+$$
+\begin{eqnarray}
+T(n) & = & 4T(n/2) + n^2 \\
+& \le & 4(c(n/2)^2\lg{(n/2)})+n^2 \\
+& = & cn^2\lg{n} -cn^2 + n^2 \\
+& \le & cn^2\lg{n}
+\end{eqnarray}
+$$
+Last line is true provided $c \ge 1 $
+
+Guessing that $cn^2\lg{n} \le T(n)$
+$$
+\begin{eqnarray}
+T(n) & = & 4T(n/2) + n^2 \\
+& \ge & 4(c(n/2)^2\lg{(n/2)})+n^2 \\
+& = & cn^2\lg{n} -cn^2 + n^2 \\
+& \ge & cn^2\lg{n}
+\end{eqnarray}
+$$
+Provided $c \le 1​$
+
+Let $c_1=1,\ c_2=2$, we proceed to prove the boundary cases.
+
+Set $T(1) = 1$. 
+
+$T(2) = 4(T(1)) + 2^2 = 8$
+
+Then $n^2\lg{n} \le 8\le 2n^2\lg{n}$
+
+So $n_0=2$, which works as $4 \le 8\le 8 $
+
+So indeed, $T(n) = \Theta(n^2\lg{n})$
+
+
+
+
+
+
+
+
 
