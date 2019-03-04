@@ -590,9 +590,27 @@ Then $T(n) = k T(n/3) + \Theta(n^2)$
 
 #### 4.2-5 INCOMPLETE
 
-#### 4.2-6
+#### 4.2-6 ?
 
 Multiply a $kn\times n$ matrix by an $n\times kn$ matrix using Strassen's as an subroutine would result in padding the input matrices into $kn \times kn$ matrices, then the algorithm run time would be $\Theta((kn)^{\lg{7}})$
 
-For multiplying a $n \times kn$ matrix by an $kn \times n$ matrix, (output matrix has rows A x columns B), we output a $n \times n$ matrix. 
+We can also split the inputs into $k$ $n \times n$ matrices and perform Strassen's $k$ times and combine the results.
+
+For multiplying a $n \times kn$ matrix by an $kn \times n$ matrix, (output matrix has rows A x columns B), we output a $n \times n​$ matrix. 
+
+#### 4.2-7
+
+$(a+bi) \cdot (c+di) = ac-bd+(ad+bc)i$
+
+Can the above calculation be done in 3 multiplications of real numbers?
+
+Compute $a+b, \ c+d$ and compute $A = (a+b)(c+d)=ac+ad+bc+bd$, one multiplication
+
+Compute $(a)(c) = ac, \ (b)(d) = bd$, two multiplications
+
+Note that $A-ac-bd = ad + bc$, giving us the imaginary component
+
+Computing $ac-bd$ then gives us the real component
+
+$\square$
 

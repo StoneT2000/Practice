@@ -301,7 +301,7 @@ Strassen's method improves the run time by making the recursion tree slightly le
 1. Divide the input matrices $A,B​$ and the output matrix $C​$ into $n/2 \times n/2​$ sub-matrices (like 4 quadrants). This takes $\Theta(1)​$ time when using index calculations.
 2. Create 10 matrices $S_1,…,S_{10}$, each of which is $n/2 \times n/2$ and is the sum or difference of two matrices created in step 1. These can all be created in $\Theta(n^2)$ time as they are matrix additions.
 3. Using the sub-matrices from step 1, and $S_1,…,S_{10}$, recursively compute 7 matrix products $P_1,…,P_7$, each of size $n/2 \times n/2$.
-4. Compute the output matrix $C$'s sub-matrices $C_{11}, C_{12}, C_{21}, C_{22} $ by adding and subtracting various matrices $P_i$ and then combine them into $C$. The addition of matrices and then combining $C_{11},…,C_{22}$ takes $\Theta(n^2)$ time.
+4. Compute the output matrix $C$'s sub-matrices $C_{11}, C_{12}, C_{21}, C_{22} $ by adding and subtracting various matrices $P_i$ and then combine them into $C$. The addition of matrices and then combining $C_{11},…,C_{22}$ takes $\Theta(n^2)$ time.
 
 This then shows that $T(n) = 7T(n/2) + \Theta(n^2)​$, we were able to trade off one matrix multiplication with a constant number of matrix additions.
 
@@ -375,6 +375,62 @@ Things that impact the algorithm
 
 - Condition for using classical algorithm
 - Efficient padding. For computing the multiplication of 1025x1025 matrices, they are padded to 2048 sized square matrices, which is inefficient and leads to a lot of useless multiplications. Consider dynamic padding?
+
+
+
+### 4.3 The Substitution Method for Solving Recurrences
+
+Two steps
+
+1. Guess the form of the solution
+2. Use induction to find the constants and prove the solution works
+
+Example Application
+
+$T(n) = 2T(\lfloor n/2 \rfloor ) +n$
+
+We guess that $T(n) = O(n\lg{n})$, so we must show that $T(n) \le cn\lg{n}$ for some $c > 0$ for all $n \ge n_0$
+
+We assume that this bound holds for all $n > m = \lfloor{n/2}\rfloor​$, then we have through manipulation and substitution
+
+
+$$
+T(\lfloor{n/2}\rfloor) \le c \lfloor{n/2}\rfloor \lg{(\lfloor{n/2}\rfloor)} \implies 2T(\lfloor{n/2}\rfloor) + n \le 2(c\lfloor{n/2}\rfloor \lg{\lfloor{n/2}\rfloor}) + n \\
+T(n) \le 2(c\lfloor{n/2}\rfloor \lg{\lfloor{n/2}\rfloor}) + n
+$$
+
+Which then implies
+$$
+\begin{eqnarray}
+T(n) & \le & cn \lg{(n/2)} + n \\
+& = & cn \lg{(n)} - cn \lg{(2)} + n \\
+& = & cn \lg{(n)} - cn + n \\
+& \le & cn\lg{(n)}
+\end{eqnarray}
+$$
+Which holds as long as $c \ge 1$
+
+Induction requires that we show the solution works for the boundary conditions. We need to choose $c$ large enough such that the bound works for boundary conditions as well. However, note how $T(1) = 1$, but $c1\lg{(1)} = 0$, so the base case fails to hold
+
+Remember that we get to choose the $n_0$ in  $n \ge n_0$, so observing how for $n > 3$, the recurrence doesn't depend directly on $T(1)$, it depends on $T(2)$ or higher. (its n>3 as floor(3/2) = 1)
+
+With $T(1) = 1$, this implies $T(2) = 4,\ T(3) = 5$
+
+So now we can complete the inductive proof by showing that for a $c$, $T(2) \le c2\lg(2)$, and $T(3) \le c3\lg(3)$
+
+Turns out $c \ge 2$ is sufficient for base cases $n=2,3$ to hold.
+
+#### Making a good guess
+
+There's no good way. It takes experience and creativity and looking for patterns or connections with known bounds helps.
+
+E.g it's obvious to guess that $T(n) = 2T(n + 17) + n$ is bounded by $\Theta(n \lg{n})$ as the $+17$ term becomes less important as $n$ grows larger. So the problem reduces down to one whose answer is known.
+
+ 
+
+
+
+
 
 
 
