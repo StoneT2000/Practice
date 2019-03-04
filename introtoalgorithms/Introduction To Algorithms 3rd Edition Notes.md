@@ -188,7 +188,7 @@ When subproblems are large enough to solve recursively, it is called **recursive
 
 When subproblems are small enough such that we don't recurse, the recursion **bottoms out** and we have gotten down to the **base case**.
 
-Merge-sort is a classic example of using divid-and-conquer and its worst case running time $T(n)$ is 
+Merge-sort is a classic example of using divide-and-conquer and its worst case running time $T(n)$ is 
 $$
 T(n) =
 \begin{cases} 
@@ -210,7 +210,7 @@ Three main methods for obtaining an $\Theta$ or $O$ bound on an algorithm.
 
 #### Technicalities in recurrences
 
-Sometimes you can divide into a even sized sub problems or an integral sized sub problem, such as an odd input and using merge-sort. Additionally, boundary conditions, such as the solution to the recurrence for say $n<2$ that differ from the general solution are typically ignored.
+Sometimes you can divide into a even sized sub problems or an integral sized sub problem, such as an odd input and using merge-sort. Additionally, boundary conditions, such as the solution to the recurrence for say $n<2$ that differ from the general solution are typically ignored.
 
 These conditions are generally ignored as they won't change the run time by more than a constant factor, and thus bounds on the order of growth remain the same.
 
@@ -238,7 +238,7 @@ However, finding the maximum subarray that crosses the midpoint is a different p
 
 ![Screen Shot 2019-03-02 at 5.04.02 PM](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/Screen Shot 2019-03-02 at 5.04.02 PM.png)
 
-It can be approached by finding the maximum subarray of $A[i…mid]​$ and $A[mid+1…j]​$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]​$ and $A[mid+1]​$, we can solve this in $\Theta(n)​$ time.
+It can be approached by finding the maximum subarray of $A[i…mid]​$ and $A[mid+1…j]​$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]​$ and $A[mid+1]​$, we can solve this in $\Theta(n)​$ time.
 
 So a recursive solution can be done by finding the maximum subarray of $A[low…mid]$ and $A[mid+1…high]$ where $mid = floor((low+high)/2)$, and the maximum subarray of the arrays that cross the midpoint. Which ever of those maximum subarrays have the highest sum is then returned at each recursive step.
 
@@ -246,7 +246,7 @@ We can compute the worst case run time $T(n)$ as follows
 
 At each recursive step, we compute the max subarray of $A[low..mid], \ A[mid+1…high]$, so that takes $2T(n/2)$ time. We also compute the maximum crossing subarray, which takes $\Theta(n)$ time. There are probably some other constant time factors, so we also add a $\Theta(1)$ (Such as checking which of the maximum subarrays has the higher array sum)
 
-Thus, $T(n) = 2T(n/2)  + \Theta(n) + \Theta(1) = 2T(n/2)  + \Theta(n) $
+Thus, $T(n) = 2T(n/2)  + \Theta(n) + \Theta(1) = 2T(n/2)  + \Theta(n) $
 $$
 T(n) =
 \begin{cases} 
@@ -260,9 +260,122 @@ Which is equivalent to the merge-sort algorithm, and so clearly finding the maxi
 
 A naive implementation of an algorithm to multiply two $n \times n$ matrices would take $\Theta(n^3)$ time as there are $n^2$ entries, and each entry is the sum of $n$ values, leading to a triply nested loop algorithm that takes $\Theta(n^3)$ time.
 
-In fact, this can be sped up by using divide and conquer.
-
 #### Simple divide and conquer solution
 
-For now, assume $n$ is a power of 2. For computing $C = A \cdot B$, consider a 4-way partition of them
+For now, assume $n$ is a power of 2. For computing $C = A \cdot B$, consider a 4-way partition of them as so
+
+![Screen Shot 2019-03-03 at 3.07.56 PM](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/Screen Shot 2019-03-03 at 3.07.56 PM.png)
+
+The equation above shows that
+
+$C_{11} = A_{11} \cdot B_{11} + A_{12} \cdot B_{21}​$
+
+$C_{12} = A_{11} \cdot B_{12} + A_{12} \cdot B_{22}$
+
+$C_{21} = A_{21} \cdot B_{11} + A_{22} \cdot B_{21}​$
+
+$C_{22} = A_{21} \cdot B_{12} + A_{22} \cdot B_{22}$
+
+These each specify the multiplications of two $n/2 \times n/2$ matrices and the addition of their $n/2 \times n/2$ products. A simple recursive algorithm can then be written, with the the base case being a matrix of size $1 \times 1$
+
+The partitioning part of the algorithm can be done in $\Theta(1)$ time by using index calculations instead of performing an $\Theta(n^2)$ copying algorithm.
+
+If the runtime of the algorithm is $T(n)$, then multiplying the matrices in the subproblems takes $T(n/2)$ time. Performing the additions of the matrices, each of size $n/2 \times n/2$ implies $n^2/4$ additions each, so this is done in $\Theta(n^2)$. 
+
+The total run time of the algorithm $T(n)​$ is then
+$$
+T(n) = 8T(n/2) + \Theta(n^2)
+$$
+Note that the $8​$ can't be removed as it impacts the recursive part of the run time. 
+
+Using the master theorem that will be explained later, it can be shown that $T(n) = \Theta(n^3)$, no real improvement to the run time unfortunately. 
+
+#### Strassen's Method
+
+Strassen's method improves the run time by making the recursion tree slightly less bushy. That means it performs less recursive calls. Strassen's method performs 7 recursive multiplications of $n/2 \times n/2$ matrices instead of 8.
+
+> Strassen’s method is not at all obvious. (This might be the biggest understatement
+>
+> in this book.) It has four steps:
+
+1. Divide the input matrices $A,B​$ and the output matrix $C​$ into $n/2 \times n/2​$ sub-matrices (like 4 quadrants). This takes $\Theta(1)​$ time when using index calculations.
+2. Create 10 matrices $S_1,…,S_{10}$, each of which is $n/2 \times n/2$ and is the sum or difference of two matrices created in step 1. These can all be created in $\Theta(n^2)$ time as they are matrix additions.
+3. Using the sub-matrices from step 1, and $S_1,…,S_{10}$, recursively compute 7 matrix products $P_1,…,P_7$, each of size $n/2 \times n/2$.
+4. Compute the output matrix $C$'s sub-matrices $C_{11}, C_{12}, C_{21}, C_{22} $ by adding and subtracting various matrices $P_i$ and then combine them into $C$. The addition of matrices and then combining $C_{11},…,C_{22}$ takes $\Theta(n^2)$ time.
+
+This then shows that $T(n) = 7T(n/2) + \Theta(n^2)​$, we were able to trade off one matrix multiplication with a constant number of matrix additions.
+
+Using the master theorem, it can be shown that $T(n) = \Theta(n^{\lg{7}})$
+
+Details of steps 2,3, and 4.
+
+**Step 2:**
+
+$S_1 = B_{12}-B_{22}​$
+
+$S_2 = A_{11} + A_{12}$
+
+$S_3 = A_{21} + A_{22}$
+
+$S_4 = B_{21} - B_{11}$
+
+$S_5 = A_{11} + A_{22}$
+
+$S_6 = B_{11} + B_{22}$
+
+$S_7 = A_{12} - A_{22}$
+
+$S_8 = B_{21} + B_{22}​$
+
+$S_9 = A_{11} - A_{21}$
+
+$S_{10} = B_{11} + B_{12}​$
+
+A total of 10 sums of two $n/2 \times n/2​$ matrices are computed, so a total of $10 \cdot \frac{n^2}{4}​$ additions are made, $\Theta(n^2)​$ run time.
+
+**Step 3:**
+
+$P_1 = A_{11}\cdot S_{1} = A_{11}\cdot B_{12} - A_{11} \cdot B_{22}$
+
+$P_2 = S_2 \cdot B_{22} = A_{11} \cdot B_{22} + A_{12} \cdot B_{22}$
+
+$P_3 = S_3 \cdot B_{11} = A_{21} \cdot B_{11} + A_{22} \cdot B_{11}$
+
+$P_4 = A_{22} \cdot S_4 = A_{22} \cdot B_{21} - A_{22} \cdot B_{11}$
+
+$P_5 = S_5 \cdot S_6 = A_{11} \cdot B_{11} + A_{11} \cdot B_{22} + A_{22} \cdot B_{11} + A_{22} \cdot B_{22}$
+
+$P_6 = S_7 \cdot S_8 = A_{12} \cdot B_{21} + A_{12} \cdot B_{22} - A_{22} \cdot B_{21} - A_{22} \cdot B_{22}$
+
+$P_7 = S_9 \cdot S_{10} = A_{11} \cdot B_{11} + A_{11} \cdot B_{12} - A_{21} \cdot B_{11} - A_{21} \cdot B_{12}$
+
+As the $S_i​$'s are known, only 7 matrix multiplications are needed. Additionally, each of the multiplications are sub problems so these are 7 recursive matrix multiplications.
+
+**Step 4:**
+
+$C_{11} = P_5 + P_4 - P_2 + P_6$
+
+$C_{12} = P_1 + P_2​$
+
+$C_{21} = P_3 + P_4$
+
+$C_{22} = P_5 + P_1 - P_3 - P_7$
+
+These are matrix additions so this takes $\Theta(n^2)$ time.
+
+
+
+Things to think about / I noticed
+
+If you expand all the operations out, it works! Checking my JS file.
+
+Note that Strassen's algorithm has a function call overhead and so recursively solving the matrix multiplications down to matrix sizes of 1 is inefficient and slow. Additionally, Strassen's algorithm, although does less multiplications, does a lot of extra additions and other operations just to multiply two $2 \times 2$ matrices if the recursion is done all the way to 1. So, a improvement would be to recurse all the way down to a $n$, lets say 64, and then run the classic $\Theta(n^3)$ algorithm for multiplying matrices. 
+
+Things that impact the algorithm
+
+- Condition for using classical algorithm
+- Efficient padding. For computing the multiplication of 1025x1025 matrices, they are padded to 2048 sized square matrices, which is inefficient and leads to a lot of useless multiplications. Consider dynamic padding?
+
+
+
 

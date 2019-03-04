@@ -506,11 +506,11 @@ If $b < b_3 \le c​$ then $S(A[b_3…c]) < S(A[b…c])​$, and so if the new m
 
 Knowing the above, we now have that the maximum subarray of $A[1…j+1]$ is either $A[b…c]$, or $A[b…j+1]$ or $A[i…j+1]$ where $i > c$.
 
-It will now be shown that the maximum subarray of the form $A[i…j+1]$ must either be $A[j+1]$ or the max subarray of $A[c+1….j]$ with $A[j+1]​$ added to it.
+It will now be shown that the maximum subarray of the form $A[i…j+1]$ must either be $A[j+1]$ or the max subarray of $A[c+1….j]$ with $A[j+1]​$ added to it.
 
 Suppose the maximum subarray of $A[c+1…j]$ is $A[d…j]$ where $c+1 \le d$. The leftmost element index of the maximum subarray of $A[c+1…j+1]$ must be $d$ or $j+1$. If the index $d_1 < d$, then the maximum subarray of $A[c+1…j]$ would not be $A[d…j]$, it would be $A[d_1…j]$ as $S(A[d_1…d-1]) > 0$. If the leftmost element index was $d_2 > d, d_2 \not= j+1$, the maximum subarray of $A[c+1….j]$ would be $A[d_2…j]$ as $S(A[d…d_2-1]) <0$. Thus, we reduce the possible maximum subarrays of the form $A[i…j+1]$ to only two possibilities, $A[j+1]$, or the max subarray of $A[c+1…j]$ that contains $A[j]$ and has the element $A[j+1]$ appended to it.
 
-To conclude, at the $jth$ iteration, the next maximum subarray given that the maximum subarray of $A[1…j] = A[b…c]$ must be one of $A[j+1]$, $A[b…c]$, or the max subarray of $A[c+1…j] = A[k…j]$ that contains $A[j]$ and has the element $A[j+1]$ appended to it. This is reflected in the pseudocode below, where we first determine which of either $S(A[k…j]) + A[j+1]$ or $A[j+1]$ is larger (rightsum < 0) and then determine if it is larger than the current maximum sum of the current maximum subarray at the $jth$ iteration.
+To conclude, at the $jth$ iteration, the next maximum subarray given that the maximum subarray of $A[1…j] = A[b…c]$ must be one of $A[j+1]$, $A[b…c]$, or the max subarray of $A[c+1…j] = A[k…j]$ that contains $A[j]$ and has the element $A[j+1]$ appended to it. This is reflected in the pseudocode below, where we first determine which of either $S(A[k…j]) + A[j+1]$ or $A[j+1]$ is larger (rightsum < 0) and then determine if it is larger than the current maximum sum of the current maximum subarray at the $jth$ iteration.
 
 ```pseudocode
 FIND-MAXIMUM-SUBARRAY(A)
@@ -535,4 +535,64 @@ for j = 2 to n
 return (b, c, currentMax)	
 ```
 
+#### 4.2-2
+
+Pseudocode for Strassen's Algorithm
+
+Note that $A[i][j]$ refers to the value $A_{ij}$ in the matrix $A$.
+
+Variables $Aij$ such as $A11$ are created from partitioning $A,B,C$.
+
+```pseudocode
+MultiplySquareMatrix(A,B)
+n = A.length
+let C be a new n x n matrix
+if n == 1
+	C[1][1] = A[1][1] * B[1][1] //we are one-indexed
+else partition A, B, C into 4 sub-matrices each //Step 1
+	Compute the S matrices S1, S2, ..., S10 //These are simple additions, step 2
+	//Step 3
+	P1 = MultiplySquareMatrix(A11, S1)
+	P2 = MultiplySquareMatrix(S2, B22)
+	P3 = MultiplySquareMatrix(S3, B11)
+	P4 = MultiplySquareMatrix(A22, S4)
+	P5 = MultiplySquareMatrix(S5, S6)
+	P6 = MultiplySquareMatrix(S7, S8)
+	P7 = MultiplySquareMatrix(S9, S10)
+	//Step 4
+	C11 = P5 + P4 - P2 + P6
+	C12 = P1 + P2
+	C21 = P3 + P4
+	C22 = P5 + P1 - P3 - P7
+	Combine C11,C12,C21,C22 into one matrix C accordingly
+return C
+	
+```
+
+It should be noted that at line 4, it is much better to set when $n \le N$, where $N$ could be 1024, we should then compute $C$ with a the classic $\Theta(n^3)$ non-recursive algorithm as this would involve less function calls and a lot less operations of just adding and subtracting.
+
+#### 4.2-3
+
+How can Strassen's algorithm be modified to multiply square matrices in which its size is not an exact power of 2? Does it run in $\Theta(n^{\lg{7}})$?
+
+We can increase the size of the square matrices by padding the additional rows and columns of 0's. This is essentially done by copying into a new array of size $n_2 \times n_2$ where $n_2 \ge n$ and $n_2$ is a power of 2. In fact, $n_2 = 2^{\lceil\lg{n}\rceil}.$ Creating a new array of size $n_2 \times n_2$ and copying values into it clearly takes $\Theta(n_2^2) =\Theta(n^2)$ because $\Theta(\lceil \lg{n} \rceil) = \Theta(\lg{n})$. $n^2 = o(n^{\lg{7}})$, so Strassen's still runs in $\Theta(n^{\lg{7}})$
+
+#### 4.2-4 INCOMPLETE
+
+What is the largest $k$ such that if you can multiply $3 \times 3$ 
+matrices using $k$ multiplications (not assuming commutativity of 
+multiplication), then you can multiply $n \times n$ matrices is time
+$o(n^{\lg 7})​$? What would the running time of this algorithm be?
+
+We would divide a matrices into 9 square sub-matrices of size $n/3$
+
+Then $T(n) = k T(n/3) + \Theta(n^2)$
+
+#### 4.2-5 INCOMPLETE
+
+#### 4.2-6
+
+Multiply a $kn\times n$ matrix by an $n\times kn$ matrix using Strassen's as an subroutine would result in padding the input matrices into $kn \times kn$ matrices, then the algorithm run time would be $\Theta((kn)^{\lg{7}})$
+
+For multiplying a $n \times kn$ matrix by an $kn \times n$ matrix, (output matrix has rows A x columns B), we output a $n \times n$ matrix. 
 
