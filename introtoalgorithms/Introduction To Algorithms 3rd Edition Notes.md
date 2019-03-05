@@ -450,6 +450,122 @@ Sometimes you can manipulate variables a bit to get a recognizable relation.
 
 
 
+### 4.4 The recursion-tree method for solving recurrences
+
+By drawing out a recursion-tree, a recurrence solution can be made, or at least a good guess can be made, which can then be proven using the substitution rule.
+
+First at each depth level $i = 0,1,2,…$, we want to compute the run time at each node, and then sum all the nodes in the same level to get a runtime for that level. Then we sum all the runtimes for all the levels to get a overall runtime and bound it. This method could be direct proof if cases are handled correctly, but are usually good enough to provide a good guess for substitution later.
+
+
+
+Example of a recurrence solution that can be proven directly with some mathematics, or provide a good guess for the runtime of a recursive algorithm.
+
+**Good Guess Method**
+
+Let $T(n)= T(n/3) + T(2n/3) + O(n)$
+
+Letting $O(n) \le cn$, we have $T(n) \le T(n/3) + T(2n/3) + cn$
+
+The longest path from a root to a leaf is the when we follow the $T(2n/3)$ term, so $n \rightarrow 2n/3 \rightarrow n(2/3)^2 \rightarrow …\rightarrow 1$
+
+$n(2/3)^k = 1​$, implying $k = \log_{3/2}{n}​$ is the height of the tree. 
+
+However, this tree isn't a complete binary tree and not all of its leaves go to a depth of $k$, and there aren't $2^{\log_{3/2}{n}}= n^{\log_{3/2}{2}}$ leaves at depth $k$
+
+We might expect that as $\log_{3/2}{2} > 1​$, the runtime is $\omega(n\lg{n})​$. But, remember it's not a complete binary tree. Not all levels contribute a cost of $cn​$ due to the non-binaryness of the tree. The missing internal nodes that would make it binary allow us to make a good guess that the runtime is indeed $O(n\lg{n})​$, and so we tolerate the sloppiness here.
+
+Guessing that $T(n) = O(n\lg{n})$, we assume that $T(n) \le dn\lg{n}$, for some $d>0$
+$$
+\begin{eqnarray}
+T(n) & \le & d(n/3)\lg(n/3) + d(2n/3)\lg(2n/3) + cn \\
+& = & (d(n/3)\lg(n)-d(n/3)\lg(3)) + (d(2n/3)\lg(n)+d(2n/3)\lg(2)-d(2n/3)\lg(3)) + cn \\
+& = & dn\lg(n) - dn\lg(3) + d(2n/3) + cn \\
+& \le & dn\lg(n)
+\end{eqnarray}
+$$
+Where the last line is true provided that $\frac{c}{\lg(3)-2/3} \le d​$
+
+So we show that $T(n) = O(n\lg{n})​$ (you can figure out the boundary details yourself)
+
+**More Mathematical Method**
+
+We can apply a mathematical treatment to this problem to show that it is clearly $O(n\lg{n})$
+
+Consider at depth level $i$, there are normally $2^i$ nodes, unless the problem subdivides to a size $<1$, of which it's a constant time problem of time $T(1)=1​$ or less.
+
+Clearly, as the problem subdivides into a third or two thirds the original size, all nodes must be of size $(2^m/3^i)n$, where $i$ is the depth level, and $0 \le m \le i$
+
+If $m=i$, that would mean we are looking at the nodes that were continuously split into 2/3 of the original size. Likewise, $m=0$, would be referring to nodes that were continuously split into 1/3 of the original size. Values of $m$ in between would reference nodes in between. 
+
+Note that there are several ways in which a subproblem of size $(2^m/3^i)n$ can be achieved. There are in fact $i\choose{m}$ ways, which can be seen from a combinatorial argument. At each node, we create two child nodes that are either 1/3 or 2/3 of the original size. So at level $i$, we have created child nodes $i$ times, and so we choose a 1/3 or 2/3 subdivision of the original problem size $i$ times. The number of times we choose 2/3 is between $0$ and $i$, which is what $m$ is defined as. If we choose $1/3$, we don't change the numerator of $(2^m/3^i)n$, and just increment the denominator. Thus, for the $i$ different times we make that subdivision size decision, we can choose $m$ levels to make the decision to subdivide into 2/3 of the original size, leading to $i \choose m$ different appearances of the nodes of size $(2^m/3^i)n$ at level $i$.
+
+To recap, at each level $i​$, there are $2^i​$ nodes, and $i\choose m​$ nodes of size $(2^m/3^i)n​$. Remembering that there is also the $O(n)​$ factor in $T(n)​$, the root size is $n​$ and the non recursive portion takes $cn​$ time. Thus, we can compute the total running time $T_i(n)​$ at level $i​$ as
+$$
+\begin{eqnarray}
+T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{\frac{2^mn}{3^i}} \\
+& = & cn \sum_{m=0}^{2^i} {i \choose m}{\frac{2^m}{3^i}} \\
+& = & cn (\frac{2}{3} + \frac{1}{3})^{2^i} \\
+& = & cn
+\end{eqnarray}
+$$
+However, $T_i(n) = cn​$ only when $i \le \lceil \log_{3}{n} \rceil​$, the shortest path length from root to a leaf. We can say that $T_i(n) \le cn​$ for all $i​$.
+
+If we assume that we have a complete binary tree and all nodes of size less than 1 aren't disregarded, we can see that $T_i(n) = cn​$ for all $i​$, and this would mean that we will overestimate $T(n)​$. Then $T(n) \le cn\log_{3/2}{n}​$.
+
+If we assume that the binary tree stops at $i = \log_3{n}$, then by summing all of the levels, we would be underestimating $T(n)$. Then $T(n) \ge cn\log_3{n}$
+
+Thus, we can bound $T(n)$ by $\Omega(n\log_3{n})$, and $O(n\log_{3/2}{n})$
+
+As the lower and upper bound are within a constant factor of $n\lg{n}$, which imply $T(n) = \Theta(n\lg{n})$
+
+We've already shown that $T(n) = O(n\lg{n})$, we can use substitution to show $T(n) = \Omega(n\lg{n})$
+$$
+\begin{eqnarray}
+T(n) & \ge & d(n/3)\lg(n/3) + d(2n/3)\lg(2n/3) + cn \\
+& = & (d(n/3)\lg(n)-d(n/3)\lg(3)) + (d(2n/3)\lg(n)+d(2n/3)\lg(2)-d(2n/3)\lg(3)) + cn \\
+& = & dn\lg(n) - dn\lg(3) + d(2n/3) + cn \\
+& \ge & dn\lg(n)
+\end{eqnarray}
+$$
+The last line is true provided $\frac{c}{\lg(3)-2/3} \ge d$
+
+Thus, we confirm that $T(n) = \Theta(n\lg{n})$, although it was not needed.
+
+### 4.5 The master method for solving recurrences
+
+The master method solves recurrences of the form 
+$$
+T(n) = aT(n/b) + f(n)
+$$
+where $a \ge 1, \ b > 1$ are constants and $f(n)$ is asymptotically positive.
+
+The recurrences describe a problem that subdivides into $a$ subproblems of size $n/b$ and dividing and combining results takes $f(n)$ time. This is not technically rigorous as $n/b$ may not be integral. But replacing $T(n/b)$ with $T(\lceil n/b \rceil)$ or $T(\lfloor n/b \rfloor)$ won't impact the asymptotic behavior of the solution.
+
+![mastertheorem](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/mastertheorem.png)
+
+This is intuitive as the solution to $T(n)$ is the larger of $\Theta(n^{\log_b{a}})$ and $\Theta(f(n))$
+
+For 2, we just multiply by a logarithmic factor.
+
+However, observe that for 1 and 3, $f(n)$ must be asymptotically smaller or larger polynomially by a factor of $n^\epsilon$. For the third case, there is the additional "regularity" constraint that $af(n/b) \le cf(n)$ for $c < 1$ and sufficiently large $n$, usually is satisfied by most polynomially bounded functions.
+
+Note that this master theorem doesn't cover all cases, e.g when $f(n)$ is not polynomially larger or smaller, or when the 
+
+**Examples**
+
+$T(n) = 3T(n/4) + 1$)
+
+$T(n) = 3T(n/4)+ n\lg{n}$
+
+$n\lg{n} = \Omega(n^{log_4(3)+\epsilon})$, where $\epsilon \approx 0.2$ as we know $n\lg{n} = \Omega(n)=\Omega(n^{\log_4{3}}+\epsilon)$ ($\log_4{3} \approx 0.793$)
+
+The regularity condition is holds for $n\lg{n}$; for sufficiently large $n$
+
+$3(n/4)\lg(n/4) \le c n \lg {n}$, of which $c = 3/4$ works. By case 3, the solution to the recurrence is $T(n) = \Theta(n\lg{n})$
+
+$T(n) = 2T(n/2) + n\lg{n}$
+
+$n^{\log_b{a}}=n$, but note that $n\lg{n}$ is not polynomially larger than $n$, as the $\lg{n}$ term is polynomially bounded.
 
 
 

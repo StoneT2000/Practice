@@ -1,4 +1,4 @@
-# Introduction to Algorithms 3rd Edition Solutions/Work
+Introduction to Algorithms 3rd Edition Solutions/Work
 
 
 
@@ -699,11 +699,213 @@ So $n_0=2$, which works as $4 \le 8\le 8 $
 
 So indeed, $T(n) = \Theta(n^2\lg{n})$
 
+#### 4.3-9
+
+$T(n) = 3T(\sqrt{n})+\lg{n}$
+
+Let $m = \lg{n}$, and $S(m) = T(2^m)$
+
+We have $T(2^m) = 3T(2^{m/2}) + m \implies S(m) = 3S(m/2) + m$
+
+Guess that $S(m) = \Theta(m^{\lg{3}})$
+
+Test stronger bounds e.g $c_1m^{\lg{3}} + d_1m \le S(m) \le c_2m^{\lg{3}} - d_2m$
+$$
+\begin{eqnarray}
+S(m) & = & 3S(m/2) + m \\
+& \le & 3(c_2(m/2)^{\lg{3}}-d_2(m/2) + m \\
+& = & c_2m^{\lg{3}}-3d_2(m/2) + m \\
+& \le & c_2m^{\lg{3}} -d_2m
+\end{eqnarray}
+$$
+Which is true provided, $d_2 \ge 2​$
+$$
+\begin{eqnarray}
+S(m) & = & 3S(m/2) + m \\
+& \ge & 3(c_1(m/2)^{\lg{3}}+d_1(m/2) + m \\
+& = & c_1m^{\lg{3}}+3d_1(m/2) + m \\
+& \ge & c_1m^{\lg{3}} +d_1m
+\end{eqnarray}
+$$
+
+
+Which is true provided $d_1 \ge 2$
+
+Testing for boundary conditions, set $S(1) = 1$ (which implies $T(1) = 1$)
+
+Set $d_1,d_2 = 2$, we have that $c_2 \ge 3, c_1 \le1/3 $, $n_0 = 1$
+
+So $S(m) = \Theta(m^{\lg{3}})$
+
+Implying $T(2^m) = 3T(2^{m/2}) + m = \Theta(m^{\lg{3}})$
+
+Implying $T(n) = 3T(\sqrt{n}) + \lg{n} = \Theta(\lg{n}^{\lg{3}})$
 
 
 
+#### 4.4-3
 
+Let $T(n) = 4T(n/2 + 2) + n$
 
+At depth $i$, there are $4^i$ nodes, all the same size of $((...((n/2)+2)/2+2)…+2)/2 + 2)$, with $i$ divisions in the continued fraction. The continued fraction evaluates to 
+$$
+\frac{n+2^2+2^3+…2^{i-1}}{2^i} = \frac{n+4(2^{i}-1)}{2^i}
+$$
+So the runtime at depth $i$ is
+$$
+ 4^i\frac{n+4(2^{i}-1)}{2^i} = 2^in+2^{i+2}(2^i-1)
+$$
+Tree goes all the way until $T(1)$ is reached, so when $\frac{n+4(2^{i}-1)}{2^i} = 1$
+
+As $n$ grows large, the constant term becomes irrelevant anyway, so the depth is about $k = \lg{n}$
+
+The runtime is then also approximately $2^in$ at depth $i$ for large $n$. So we can make the following approximation, with the additional assumption that $n$ is a power of 2 for simplicities sake.
+$$
+\begin{eqnarray}
+T(n) & = & n + 2n + 2^2n +…+ 2^{\lg{n}}n \\
+& = & n(n-1) \\
+& = & n^2 - n \\
+& \le & n^2
+\end{eqnarray}
+$$
+So guess that $T(n) = O(n^2)​$
+$$
+\begin{eqnarray}
+T(n) & = & 4T(n/2+2)+n \\
+& \le & 4(c(n/2+2)^2) +n \\
+& = & cn^2 + 8cn + 16c + n \\
+\end{eqnarray}
+$$
+Oops, induction paradox probably needed
+
+Guess that $T(n) \le cn^2 - dn$
+$$
+\begin{eqnarray}
+T(n) & = & 4T(n/2+2)+n \\
+& \le & 4(c(n/2+2)^2-d(n/2+2)) +n \\
+& = & cn^2 + 8cn + 16c-4d(n/2+2) + n \\
+& \le & cn^2 -dn
+\end{eqnarray}
+$$
+Last line is true provided 
+$$
+\begin{eqnarray}
+cn^2 - dn & \ge & cn^2 + 8cn+16c-4d(n/2+2)+n \\
+(2n+8)d -dn & \ge & 8cn+16c+n \\
+d & \ge & \frac{8cn+16c+n}{n+8} \\
+d & \ge & \frac{8c+16c/n + 1}{1+8/n}
+\end{eqnarray}
+$$
+For large $n$, it would then imply
+$$
+\begin{eqnarray}
+d \ge 8c + 1
+\end{eqnarray}
+$$
+Which is entirely possible, but let's first test boundary conditions anyway.
+
+We notice that for $n \le 8 ​$, $T(n)​$ isn't exactly going to be $\le​$ than $cn^2 - (8c+1)n=cn^2​$ assuming positive runtimes.
+
+So we need to evaluate some base cases. (We skip over $n=1,2,3,4$ because they don't mean much and can't be evaluated properly)
+
+Let $T(5) = 5$, choose $d = 8c+1$
+
+$T(6) = 4T(3+2) + 6 = 26$
+
+$T(8) = 4T(4+2) + 8 = 112$
+
+$T(12) = 4T(6+2) + 12 = 460$
+
+Now if we let $n_0 = 12​$,
+$$
+\begin{eqnarray}
+T(12) & = & 460 \le c\cdot12^2 - (8c+1)\cdot12 \\
+460 & \le & 48c-12 \\
+472/48 & \le & c
+\end{eqnarray}
+$$
+So we prove that $T(n) = O(n^2)​$, for $n \ge n_0 = 12​$ and $c \ge 472/48​$, bounding $T(n) \le cn^2​$, given $T(5) = 5​$
+
+Curiously, $T(4) = -4/3​$ as implied by $T(4) = 4T(4/2 +2) + 4​$
+
+#### 4.4-6
+
+At each level $i$, there are $2^i$ nodes, and $i\choose m$ nodes of size $(2^m/3^i)n$. Remembering that there is also the $O(n)$ factor in $T(n)$, the root size is $n$ and the non recursive portion takes $cn$ time. Thus, we can compute the total running time $T_i(n)$ at level $i​$ as
+$$
+\begin{eqnarray}
+T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{\frac{2^mn}{3^i}} \\
+& = & cn \sum_{m=0}^{2^i} {i \choose m}{\frac{2^m}{3^i}} \\
+& = & cn (\frac{2}{3} + \frac{1}{3})^{2^i} \\
+& = & cn
+\end{eqnarray}
+$$
+However, $T_i(n) = cn$ only when $i \le \lceil \log_{3}{n} \rceil$, so if we only measure the runtime up to that level, we would underestimate $T(n)$, so $T(n) = \Omega(n\log_3{n}) = \Omega(n\lg{n})$
+
+#### 4.4-9
+Solve the recurrence $T(n) = T(\alpha n) + T((1-\alpha)n) + cn$, for $0<\alpha < 1$ and $c >0$
+
+At each level $i​$ until a certain depth, there are $2^i​$ nodes, and $i\choose m​$ nodes of size $(\alpha^m(1-\alpha)^i)n​$. Remembering that there is also the $O(n)​$ factor in $T(n)​$, the root size is $n​$ and the non recursive portion takes $cn​$ time. Thus, we can compute the total running time $T_i(n)​$ at level $i​$ as
+$$
+\begin{eqnarray}
+T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{(\alpha^m(1-\alpha)^i)n} \\
+& = & cn \sum_{m=0}^{2^i} {i \choose m}(\alpha^m(1-\alpha)^i) \\
+& = & cn (\alpha + 1-\alpha)^{2^i} \\
+& = & cn
+\end{eqnarray}
+$$
+Analyzing the recursion tree, we see that it's incomplete, with the shortest path from root to leaf being $1=\alpha^kn$, $k = \log_{1/\alpha_0}(n)$, where $\alpha_0 = \min{(\alpha, 1-\alpha)}$
+
+The longest path from root to leaf is $\log_{1/\alpha_1}(n)$, where $\alpha_1 = \max(\alpha,1-\alpha)$
+
+We see that
+
+ $T_i(n) = cn​$ for $i \le \lceil{log_{1/\alpha_0}(n)}\rceil​$, and $T_i(n) \le cn​$ for $\lceil{log_{1/\alpha_0}(n)}\rceil \le i \le \lceil{log_{1/\alpha_1}(n)}\rceil​$
+
+As $T(n) = \sum^{\lceil{log_{1/\alpha_1}(n)}\rceil}_{i=0}T_i(n)$ and all $T_i(n) > 0$.
+
+$cn\lceil{log_{1/\alpha_0}(n)}\rceil\le T(n) \le cn\lceil{log_{1/\alpha_1}(n)}\rceil$
+
+We have, $T(n) = \Omega(cn\lceil{log_{1/\alpha_0}(n)}\rceil) = \Omega(n\log_{1/\alpha_0}(n))=\Omega(n\lg{n})$
+
+$T(n) = O(cn\lceil{log_{1/\alpha_1}(n)}\rceil) = O(n\log_{1/\alpha_1}(n))=O(n\lg{n})$
+
+So $T(n) = \Theta({n\lg{n}})$ (I'm pretty sure this is mathematically rigorous)
+
+We can substitute to verify just in case.
+
+We guess that $T(n) \le dn\lg{n}$
+$$
+\begin{eqnarray}
+T(n) & = & T(\alpha n) + T((1-\alpha)n) + cn \\
+& \le & d\alpha n\lg(\alpha n) + d(1-\alpha)n\lg{((1-\alpha)n)} + cn\\
+& = & d\alpha n (\lg(\alpha) + \lg(n)) + d (1-\alpha)n(\lg(1-\alpha) + \lg(n)) + cn \\
+& = & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha)n\lg(1-\alpha) + cn
+\end{eqnarray}
+$$
+Knowing that $0 <  \alpha < 1$
+$$
+\begin{eqnarray}
+T(n) & \le & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha)n\lg(1-\alpha) + cn\\
+& \le & dn\lg(n) 
+\end{eqnarray}
+$$
+This is true as both terms with $\lg(\alpha)​$ and $\lg(1-\alpha)​$ are negative and provided that $d​$ is sufficiently large enough to reduce $cn​$. To bound $d​$, we do the following
+$$
+\begin{eqnarray}
+dn\lg(n) & \ge & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha) n \lg(1-\alpha) + cn \\
+-cn & \ge & dn(\alpha\lg(\alpha) + (1-\alpha)\lg(1-\alpha)) \\
+\frac{-c}{\alpha\lg(\alpha) + (1-\alpha)\lg(1-\alpha)} & \le & d
+\end{eqnarray}
+$$
+The sign switch at the end is due to $\alpha\lg(\alpha) + (1-\alpha)\lg(1-\alpha) < 0$ 
+
+To prove the lower bound, we can do the same thing and we will get that 
+$$
+\begin{eqnarray}
+\frac{-c}{\alpha\lg(\alpha) + (1-\alpha)\lg(1-\alpha)} & \ge & d
+\end{eqnarray}
+$$
+Therefore, $T(n) = \Theta(n\lg{n})$
 
 
 
