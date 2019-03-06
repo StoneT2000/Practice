@@ -24,7 +24,7 @@ Example of asymptotically tightness: $3n^3 + 3n-3 = O(n^3)​$ is tight if $3n^3
 
 $c_1n^3\leq 3n^3 + 3n - 3\leq c_2n^3 \implies c_1\leq 3 + \frac{3}{n^2} - \frac{3}{n^3} \leq c_2$. As $c_1,c_2$ are constant and tightly bound a function above and below, we have that $3n^3 + 3n - 3 = O(n^3)$ is tight.
 
-![relativegrowthrates](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/relativegrowthrates.png)
+![growthrates](assets/growthrates.png)
 
 The statement $f(n) = O(g(n))$ merely claims that some constant multiple of $g(n)$ is an upper bound for $f(n)$, with no claims as to how tight the bound is.
 
@@ -236,9 +236,9 @@ We can find the maximum subarray of $A[low…mid], \ A[mid+1…high]$ recursivel
 
 However, finding the maximum subarray that crosses the midpoint is a different problem.
 
-![Screen Shot 2019-03-02 at 5.04.02 PM](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/Screen Shot 2019-03-02 at 5.04.02 PM.png)
+![fig4.4](assets/fig4.4.png)
 
-It can be approached by finding the maximum subarray of $A[i…mid]​$ and $A[mid+1…j]​$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]​$ and $A[mid+1]​$, we can solve this in $\Theta(n)​$ time.
+It can be approached by finding the maximum subarray of $A[i…mid]$ and $A[mid+1…j]$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]$ and $A[mid+1]$, we can solve this in $\Theta(n)​$ time.
 
 So a recursive solution can be done by finding the maximum subarray of $A[low…mid]$ and $A[mid+1…high]$ where $mid = floor((low+high)/2)$, and the maximum subarray of the arrays that cross the midpoint. Which ever of those maximum subarrays have the highest sum is then returned at each recursive step.
 
@@ -264,19 +264,19 @@ A naive implementation of an algorithm to multiply two $n \times n$ matrices wou
 
 For now, assume $n$ is a power of 2. For computing $C = A \cdot B$, consider a 4-way partition of them as so
 
-![Screen Shot 2019-03-03 at 3.07.56 PM](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/Screen Shot 2019-03-03 at 3.07.56 PM.png)
+![eqn4.9](assets/eqn4.9.png)
 
 The equation above shows that
 
 $C_{11} = A_{11} \cdot B_{11} + A_{12} \cdot B_{21}​$
 
-$C_{12} = A_{11} \cdot B_{12} + A_{12} \cdot B_{22}$
+$C_{12} = A_{11} \cdot B_{12} + A_{12} \cdot B_{22}​$
 
 $C_{21} = A_{21} \cdot B_{11} + A_{22} \cdot B_{21}​$
 
 $C_{22} = A_{21} \cdot B_{12} + A_{22} \cdot B_{22}$
 
-These each specify the multiplications of two $n/2 \times n/2$ matrices and the addition of their $n/2 \times n/2$ products. A simple recursive algorithm can then be written, with the the base case being a matrix of size $1 \times 1$
+These each specify the multiplications of two $n/2 \times n/2$ matrices and the addition of their $n/2 \times n/2$ products. A simple recursive algorithm can then be written, with the the base case being a matrix of size $1 \times 1​$
 
 The partitioning part of the algorithm can be done in $\Theta(1)$ time by using index calculations instead of performing an $\Theta(n^2)$ copying algorithm.
 
@@ -541,7 +541,7 @@ where $a \ge 1, \ b > 1$ are constants and $f(n)$ is asymptotically positive.
 
 The recurrences describe a problem that subdivides into $a$ subproblems of size $n/b$ and dividing and combining results takes $f(n)$ time. This is not technically rigorous as $n/b$ may not be integral. But replacing $T(n/b)$ with $T(\lceil n/b \rceil)$ or $T(\lfloor n/b \rfloor)$ won't impact the asymptotic behavior of the solution.
 
-![mastertheorem](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/mastertheorem.png)
+![theorem4.1](assets/theorem4.1.png)
 
 This is intuitive as the solution to $T(n)$ is the larger of $\Theta(n^{\log_b{a}})$ and $\Theta(f(n))$
 
