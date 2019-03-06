@@ -539,7 +539,7 @@ T(n) = aT(n/b) + f(n)
 $$
 where $a \ge 1, \ b > 1$ are constants and $f(n)$ is asymptotically positive.
 
-The recurrences describe a problem that subdivides into $a$ subproblems of size $n/b$ and dividing and combining results takes $f(n)$ time. This is not technically rigorous as $n/b$ may not be integral. But replacing $T(n/b)$ with $T(\lceil n/b \rceil)$ or $T(\lfloor n/b \rfloor)$ won't impact the asymptotic behavior of the solution.
+The recurrences describe a problem that subdivides into $a$ subproblems of size $n/b$ and dividing and combining results takes $f(n)$ time. This is not technically rigorous as $n/b$ may not be integral. But replacing $T(n/b)$ with $T(\lceil n/b \rceil)$ or $T(\lfloor n/b \rfloor)$ won't impact the asymptotic behavior of the solution.
 
 ![mastertheorem](/Users/stone.tao/Desktop/Coding/Practice/introtoalgorithms/assets/mastertheorem.png)
 
@@ -547,9 +547,9 @@ This is intuitive as the solution to $T(n)$ is the larger of $\Theta(n^{\log_b{a
 
 For 2, we just multiply by a logarithmic factor.
 
-However, observe that for 1 and 3, $f(n)$ must be asymptotically smaller or larger polynomially by a factor of $n^\epsilon$. For the third case, there is the additional "regularity" constraint that $af(n/b) \le cf(n)$ for $c < 1$ and sufficiently large $n$, usually is satisfied by most polynomially bounded functions.
+However, observe that for 1 and 3, $f(n)$ must be asymptotically smaller or larger polynomially by a factor of $n^\epsilon$. For the third case, there is the additional "regularity" constraint that $af(n/b) \le cf(n)$ for $c < 1$ and sufficiently large $n$, usually is satisfied by most polynomially bounded functions. The regularity constraint essentially says that all the $f(n)$ of the sub problems, all the time it takes to divide and combine the $a$ sub-problems of size $n/b$ is upper bounded by the time it takes to divide and combine the original size $n$ within a constant factor of less than $1$. 
 
-Note that this master theorem doesn't cover all cases, e.g when $f(n)$ is not polynomially larger or smaller, or when the 
+Note that this master theorem doesn't cover all cases, e.g when $f(n)$ is not polynomially larger or smaller, or when the 
 
 **Examples**
 
@@ -559,13 +559,13 @@ $T(n) = 3T(n/4)+ n\lg{n}$
 
 $n\lg{n} = \Omega(n^{log_4(3)+\epsilon})$, where $\epsilon \approx 0.2$ as we know $n\lg{n} = \Omega(n)=\Omega(n^{\log_4{3}}+\epsilon)$ ($\log_4{3} \approx 0.793$)
 
-The regularity condition is holds for $n\lg{n}$; for sufficiently large $n$
+The regularity condition is holds for $n\lg{n}$; for sufficiently large $n​$
 
 $3(n/4)\lg(n/4) \le c n \lg {n}$, of which $c = 3/4$ works. By case 3, the solution to the recurrence is $T(n) = \Theta(n\lg{n})$
 
 $T(n) = 2T(n/2) + n\lg{n}$
 
-$n^{\log_b{a}}=n$, but note that $n\lg{n}$ is not polynomially larger than $n$, as the $\lg{n}$ term is polynomially bounded.
+$n^{\log_b{a}}=n$, but note that $n\lg{n}$ is not polynomially larger than $n$, as the $\lg{n}$ term is polynomially bounded.
 
 
 

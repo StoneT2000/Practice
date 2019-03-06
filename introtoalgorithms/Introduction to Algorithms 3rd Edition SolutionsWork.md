@@ -844,7 +844,7 @@ However, $T_i(n) = cn$ only when $i \le \lceil \log_{3}{n} \rceil$, so if we onl
 #### 4.4-9
 Solve the recurrence $T(n) = T(\alpha n) + T((1-\alpha)n) + cn$, for $0<\alpha < 1$ and $c >0$
 
-At each level $i​$ until a certain depth, there are $2^i​$ nodes, and $i\choose m​$ nodes of size $(\alpha^m(1-\alpha)^i)n​$. Remembering that there is also the $O(n)​$ factor in $T(n)​$, the root size is $n​$ and the non recursive portion takes $cn​$ time. Thus, we can compute the total running time $T_i(n)​$ at level $i​$ as
+At each level $i​$ until a certain depth, there are $2^i​$ nodes, and $i\choose m​$ nodes of size $(\alpha^m(1-\alpha)^i)n​$. Remembering that there is also the $O(n)​$ factor in $T(n)​$, the root size is $n​$ and the non recursive portion takes $cn​$ time. Thus, we can compute the total running time $T_i(n)​$ at level $i​$ as
 $$
 \begin{eqnarray}
 T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{(\alpha^m(1-\alpha)^i)n} \\
@@ -889,7 +889,7 @@ T(n) & \le & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha)n\lg(1-\alpha) + cn\\
 & \le & dn\lg(n) 
 \end{eqnarray}
 $$
-This is true as both terms with $\lg(\alpha)​$ and $\lg(1-\alpha)​$ are negative and provided that $d​$ is sufficiently large enough to reduce $cn​$. To bound $d​$, we do the following
+This is true as both terms with $\lg(\alpha)​$ and $\lg(1-\alpha)​$ are negative and provided that $d​$ is sufficiently large enough to reduce $cn​$. To bound $d​$, we do the following
 $$
 \begin{eqnarray}
 dn\lg(n) & \ge & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha) n \lg(1-\alpha) + cn \\
@@ -906,6 +906,49 @@ $$
 \end{eqnarray}
 $$
 Therefore, $T(n) = \Theta(n\lg{n})$
+
+#### 4.5-3
+
+n->n/2->n/4….->1. $\lg{n}$ levels, each taking constant time, so $T(n) = T(n/2) + \Theta(1) = \Theta(\lg{n})$
+
+#### 4.5-4
+
+$T(n) = 4T(n/2) + n^2\lg{n}$
+
+$f(n) = n^2\lg{n}$, $n^{\log_b{a}}=n^2$. However, $n^2\lg{n} \not= \Omega(n^{2+\epsilon})$ 
+
+Formal proof:
+
+Suppose for the sake of contradiction $n^2\lg{n} = \Omega(n^{2+\epsilon})$ for $\epsilon >0$
+
+Then $cn^{2}n^{\epsilon} \le n^2 \lg{n}$ for all $n \ge n_0$ where $c > 0$
+
+This implies $cn^\epsilon \le \lg{n}$, a contradiction as logarithmic functions are polynomially bounded ($= O(n^k)$)
+
+Thus, the master method cannot be used to solve for the recurrence solution.
+
+Analyzing the recursion tree, we see that at level $i$, there are $4^i$ nodes, all of the same size $n/2^i$, each node with a runtime of $\frac{n^2}{2^{2i}}\lg(n/2^i)$. The runtime at level $i$ is then $4^i \cdot \frac{n^2}{2^{2i}}\lg(n/2^i) = n^2(\lg(n/2^i)) = n^2(\lg(n) - i)$
+
+The recursion stops at the base case of size 1, which is the level $i$ when $n/2^i = 1$, which is $i = \lg{n}$
+
+So the total runtime is (Math is correct, final step skips some formalities but works)
+$$
+\begin{eqnarray}
+T(n) & = & \sum_{i=0}^{\lg{n}}n^2(\lg(n)-i) \\
+& = & \sum_{i=0}^{\lg{n}}n^2\lg(n)-n^2i \\
+& = & (\lg(n)+1)(n^2\lg(n)) - n^2\sum_{i=0}^{\lg{n}}i \\
+& = & (\lg(n)+1)(n^2\lg(n)) - (n^2)(\frac{(\lg{n})(\lg{n}+1)}{2}) \\
+& = & n^2(\frac{(\lg{n})(\lg{n}+1)}{2}) \\
+& = & \frac{1}{2} \cdot n^2\lg^2{n}+n^2\lg{n} \\
+& = & \Theta(n^2\lg^2{n})
+\end{eqnarray}
+$$
+
+#### 4.5-5
+
+Examples of $f(n)$, values of $a,b$ in $T(n) = aT(n/b) + f(n)$ such that $f(n) = \Omega(n^{\log_a{b}-\epsilon})$, but the regularity constraint $af(n/b) \le cf(n)$ is not met. (Note $c<1$)
+
+Consider $n(2-\sin(n))$
 
 
 
