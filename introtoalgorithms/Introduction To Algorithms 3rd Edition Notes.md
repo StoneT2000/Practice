@@ -561,7 +561,7 @@ $n\lg{n} = \Omega(n^{log_4(3)+\epsilon})$, where $\epsilon \approx 0.2$ as we kn
 
 The regularity condition is holds for $n\lg{n}$; for sufficiently large $n​$
 
-$3(n/4)\lg(n/4) \le c n \lg {n}$, of which $c = 3/4$ works. By case 3, the solution to the recurrence is $T(n) = \Theta(n\lg{n})$
+$3(n/4)\lg(n/4) \le c n \lg {n}$, of which $c = 3/4 < 1$ works. By case 3, the solution to the recurrence is $T(n) = \Theta(n\lg{n})$
 
 $T(n) = 2T(n/2) + n\lg{n}$
 
