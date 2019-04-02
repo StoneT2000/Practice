@@ -6,7 +6,7 @@
 
 $A\subseteq B$ means that A is a subset of B, all elements of A are in B (or $x \in A \implies x\in B$)
 
-$A\subset B$ means that all elements of A are in B but $A \not= B$
+$A\subset B$ means that all elements of A are in B but $A \not= B​$
 
 ## 3 Growth of Functions
 
