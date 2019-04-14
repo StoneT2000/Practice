@@ -948,8 +948,31 @@ $$
 
 Examples of $f(n)$, values of $a,b$ in $T(n) = aT(n/b) + f(n)$ such that $f(n) = \Omega(n^{\log_a{b}-\epsilon})$, but the regularity constraint $af(n/b) \le cf(n)$ is not met. (Note $c<1$)
 
-Consider $n(2-\sin(n))$
+Consider $n(2-\sin(n))​$
 
+#### 4.6-1 INCOMPLETE
+
+$n_j = \lceil{n_{j-1}/b}\rceil$, where $n_0 = n$
+
+An exact expression can be derived
+
+Consider $n = b^m + (n-b^m)​$, where $m = \lfloor{\log_b{n}}\rfloor​$
+
+Then $n_1 = \lceil{b^{m-1}+\frac{n-b^m}{b}}\rceil = b^{m-1} + \lceil{\frac{n-b^m}{b}}\rceil$ as $b^{m-1}$ is not fractional. Based on this intuition, I claim that
+$$
+n_j = \lceil{b^{m-j}+\frac{n-b^m}{b^j}}\rceil \\
+\text{Where } m=\lfloor{\log_b{n}}\rfloor
+$$
+
+
+Assuming $n_j = \lceil{b^{m-j}+\frac{n-b^m}{b^j}}\rceil$
+$$
+\begin{eqnarray}
+n_{j+1} & = & \lceil{\lceil{(b^{m-j}+\frac{n-b^m}{b^j}}\rceil )/ b}\rceil \\
+& = & \lceil{b^{m-j-1}+(\lceil{\frac{n-b^m}{b^j}}\rceil )/ b}\rceil \\
+& = & 
+\end{eqnarray}
+$$
 
 
 ## Chapter 5: Probabilistic Analysis and Randomized Algorithms
