@@ -952,3 +952,19 @@ Consider $n(2-\sin(n))$
 
 
 
+## Chapter 5: Probabilistic Analysis and Randomized Algorithms
+
+#### 5.1-3
+
+Given the procedure Biased-Random that returns 0 with probability $p$ and $1$ with probability $1-p$, for $0 < p < 1$, give an algorithm that uses Biased-Random as a sub-routine and returns an unbiased answer where $0$ returns with probability $1/2$ and $1$ returns with probability $1/2$.
+
+What is the expected running time in terms of $p​$?
+
+$p + (1/2 - p)$
+
+$p(1-p) =p-p^2$
+
+123			4
+
+1234 1234 1234 1234
+

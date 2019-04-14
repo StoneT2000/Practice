@@ -547,7 +547,7 @@ This is intuitive as the solution to $T(n)$ is the larger of $\Theta(n^{\log_b{a
 
 For 2, we just multiply by a logarithmic factor.
 
-However, observe that for 1 and 3, $f(n)$ must be asymptotically smaller or larger polynomially by a factor of $n^\epsilon$. For the third case, there is the additional "regularity" constraint that $af(n/b) \le cf(n)$ for $c < 1$ and sufficiently large $n$, usually is satisfied by most polynomially bounded functions. The regularity constraint essentially says that all the $f(n)$ of the sub problems, all the time it takes to divide and combine the $a$ sub-problems of size $n/b$ is upper bounded by the time it takes to divide and combine the original size $n$ within a constant factor of less than $1$. 
+However, observe that for 1 and 3, $f(n)$ must be asymptotically smaller or larger polynomially by a factor of $n^\epsilon$. For the third case, there is the additional "regularity" constraint that $af(n/b) \le cf(n)$ for $c < 1$ and sufficiently large $n$, usually is satisfied by most polynomially bounded functions. The regularity constraint essentially says that all the $f(n)$ of the sub problems, all the time it takes to divide and combine the $a$ sub-problems of size $n/b$ is upper bounded by the time it takes to divide and combine the original size $n$ within a constant factor of less than $1$. 
 
 Note that this master theorem doesn't cover all cases, e.g when $f(n)$ is not polynomially larger or smaller, or when the 
 
@@ -569,5 +569,54 @@ $n^{\log_b{a}}=n$, but note that $n\lg{n}$ is not polynomially larger than $n$, 
 
 
 
+## Probabilistic Analysis and Randomized Algorithms
 
+### 5.1 The hiring problem
+
+Consider the problem of hiring a new office assistant. An employment agency sends a new candidate each day. It costs money to interview a candidate and even more to fire the current assistant and hire a new one.  To have the best person for the job, you always interview and hire the candidate if it is better than the current one. 
+
+```pseudocode
+best = 0 //least qualified dummy candidate
+for i = 1 to n
+	interview candidate i
+	if candidate i is better than candidate best
+		best = i
+		hire candidate i
+```
+
+We can analyze the above function by not analyzing run time, but costs.
+
+The total cost with this algorithm is $O(c_i n + c_h m)$ where $m$ is the number of times we hire a candidate, $c_i, c_h$ are the costs to interview and hire.
+
+$c_h m$ varies with each run whereas $c_in$ is fixed as we interview all candidates.
+
+**Worst Case Analysis**
+
+We hire every candidate, costs $O(c_hn)$
+
+**Probabilistic Analysis**
+
+Using probability to analyze problems.
+
+In order to perform this kind of analysis, we need information on the distribution of inputs or make assumptions about it. Then we analyze the algorithm for an average-case running time by taking an average over the distribution of all possible inputs. This running time is the **average-case running time**
+
+For the hiring problem, we could assume that the applicants come in random order.
+
+As any two applicants can be compared and one can be determined as better than the other, there is a total order on the candidates. We can rank each applicant with permutation $rank$, so the ordered list $\{rank(1), rank(2), …, rank(n)\}$is a permutation of the list $\{1,2,…,n\}$. So if the input is random, it is the same as saying that this list of ranks is equally likely to appear as any one of the $n!$ permutations of the numbers $1$ through $n$. Alternatively we say the ranks form a **uniform random permutation**, each of the possible permutations occur with equal probability.
+
+**Randomized Algorithms**
+
+We can often use probability and randomness as a tool in designing better algorithms by making part of the algorithm's behavior random.
+
+In the hiring problem, we can't determine if the candidates re being presented to us in random order even if it appears to be the case. In order to develop a randomized algorithm, we need more control over how we get new candidates. Suppose now that the employment agency has $n$ candidates and a list of these candidates are sent in advance (as if the input is an array of all the candidates and not a linked list)
+
+Each day, we randomly choose a candidate to interview. Now, we have enforced a random order.
+
+Generally, we call an algorithm randomized if its behavior is determined not only by its input but also by values produced by a **random-number-generator**. Assume we have such a generator called Random, where Random(a,b) returns an integer between a and b inclusive with equal probability.
+
+In practice, you will have a **pseudo-random-number-generator**, a deterministic algorithm that returns numbers that "look" statistically random.
+
+When analyzing the run time of a randomized algorithm, we take the expectation of the running time over the distribution of values returned by the random number generator. This is the **expected running time**.
+
+To recap, **average-case-running time** is for when the probability distribution is over the inputs of the algorithm (we know the likelihood of every possible input), and **expected-running-time** is for when the algorithm itself makes random choices.
 
