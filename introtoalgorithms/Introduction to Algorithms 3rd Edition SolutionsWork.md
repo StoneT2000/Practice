@@ -17,17 +17,17 @@ Given a set S of n integers and another integer x, we may determine whether or n
 
 #### 2-1.a
 
-$n/k$ sublists of length ​$k$ can be sorted with insertion sort in $\Theta(nk)$ as each sublist of length $k$ can be sorted in $\Theta(k^2)$ worst-case time, and there are $n/k$ sublists, leading to a total worst-case time of $\Theta((n/k )k^2) =\Theta(nk)$
+$n/k$ sublists of length $k$ can be sorted with insertion sort in $\Theta(nk)$ as each sublist of length $k$ can be sorted in $\Theta(k^2)$ worst-case time, and there are $n/k$ sublists, leading to a total worst-case time of $\Theta((n/k )k^2) =\Theta(nk)$
 
 #### 2-1.b
 
 With $n/k$ sorted sublists of length $k$, a total of $T$ merges need to be performed. Each merge of all $n/k$ sublists of length $k$ takes $\Theta(n)$ time. This leaves $n/(2k)$ sublists left to merge, which then leaves $n/(4k)$… sublists left to merge until we have none to merge left. The number of times we must merge an entire level of sublists of length $k,2k,4k,…$ is $\log(n/k)$ (remember that we merge $\log(n)$ times for an array of length $n$)
 
-Thus, the time complexity to merge is $\Theta(n\log(n/k))​$
+Thus, the time complexity to merge is $\Theta(n\log(n/k))$
 
 #### 2-1.c
 
-Modified merge-sort using insertion sort at lower levels has worst-case time $\Theta(nk+n\log(n/k))​$
+Modified merge-sort using insertion sort at lower levels has worst-case time $\Theta(nk+n\log(n/k))$
 
 $n\log(n) = nk+n\log(n) - n\log(k)$
 
@@ -52,7 +52,7 @@ Loop invariant for the for loop in lines 2-4 is that $A[j]$ is the smallest elem
 
 **Initiation:**
 
-$j=A.length​$ prior to the first iteration, and the subarray $A[j…A.length]​$ only contains $A[j]​$, so invariant must be true.
+$j=A.length$ prior to the first iteration, and the subarray $A[j…A.length]$ only contains $A[j]$, so invariant must be true.
 
 **Maintenance:**
 
@@ -62,7 +62,7 @@ After decrementing $j$ to $j-1$, if $A[j-1]$ is greater than $A[j]$, the invaria
 
 **Termination:**
 
-The loop goes from $j=A.length​$ to $j=i+1​$, so at the end of the for loop we have that $A[i]​$ is the smallest element in the sub array $A[i+1…A.length]​$ .
+The loop goes from $j=A.length$ to $j=i+1$, so at the end of the for loop we have that $A[i]$ is the smallest element in the sub array $A[i+1…A.length]$ .
 
 #### 2-2.c
 
@@ -82,7 +82,7 @@ $i=A.length-1$  at the end, by the invariant, we have that $A[1…A.length-1]$ i
 
 #### 2-2.d
 
-The worst case running time of bubblesort is $\Theta(n^2)​$ as 
+The worst case running time of bubblesort is $\Theta(n^2)$ as 
 
 ```pseudocode
 for i = 1 to A.length - 1
@@ -91,13 +91,13 @@ for i = 1 to A.length - 1
 			exchange A[j] with A[j-1]
 ```
 
-Let $n = A.length​$ 
+Let $n = A.length$ 
 
 line 1: n 
 
 line 2: $\sum^{n-1}_{i=1}(n-i+1)$
 
-line 3: $\sum^{n-1}_{i=1}(n-i)​$
+line 3: $\sum^{n-1}_{i=1}(n-i)$
 
 line 4: $\sum^{n-1}_{i=1}(t_i)$ where $t_i=$ number of times $A[j]<A[j-1]$ for that $i$
 
@@ -111,11 +111,11 @@ Looking for the worst case scenario and applying some identities we have:
 
 $T(n) = c_1n + c_2(\frac{(n-1)(n)}{2}+n-1) + c_3(\frac{(n-1)(n)}{2}) + c_4(\frac{(n-1)(n)}{2})$
 
-$T(n) = (c_1+c_2)n + (c_2 + c_3 + c_4)(\frac{n^2-n}{2}) - c_2​$
+$T(n) = (c_1+c_2)n + (c_2 + c_3 + c_4)(\frac{n^2-n}{2}) - c_2$
 
 Clearly, $T(n)=an^2+bn+c$ for some $a,b,c$ determined by the $c_i$'s
 
-Leading to a time complexity in the worst case of $\Theta(n^2)​$
+Leading to a time complexity in the worst case of $\Theta(n^2)$
 
 Generally, insertion sort should be faster as bubblesort makes much more swaps? or more comparisons
 
@@ -123,7 +123,7 @@ Generally, insertion sort should be faster as bubblesort makes much more swaps? 
 
 Horner's Rule, evaluating 
 
-$P(x) = \sum^n_{k=0}a_kx^k​$
+$P(x) = \sum^n_{k=0}a_kx^k$
 
 ```pseudocode
 y = 0
@@ -141,7 +141,7 @@ A naive implementation would evaluate each term separately, requiring two for lo
 
 #### 2-3.c
 
-Considering the loop invariant: $y=\sum^{n-(i+1)}_{k=0}(a_{k+i+1}x^k)​$
+Considering the loop invariant: $y=\sum^{n-(i+1)}_{k=0}(a_{k+i+1}x^k)$
 
 **Initiation:**
 
@@ -183,7 +183,7 @@ Some math:
 
 Consider the general step of a merge in merge-sorting the original array $A=[a_1,…,a_n]$
 
-We have the left array and right array, a total of $2m​$ elements to be merged together into one array. $m​$ is the size of both arrays.
+We have the left array and right array, a total of $2m$ elements to be merged together into one array. $m$ is the size of both arrays.
 
 $L=[a_{t},a_{t+1}, …, a_{t+m-1}]$, $R=[a_{t+m},a_{t+m+1}, …, a_{t+2m-1}]$
 
@@ -209,11 +209,11 @@ So $max(f(n),g(n)) = \Theta(f(n),g(n))$
 
 #### 3.1-8
 
-$O(g(n,m)) = \{f(n,m):\exists c,n_0,m_0 > 0 \text{ such that } 0 \leq f(n,m) \leq cg(n,m) \text{ for all } n\geq n_0 \text{ or } m\geq m_0 \}​$.
+$O(g(n,m)) = \{f(n,m):\exists c,n_0,m_0 > 0 \text{ such that } 0 \leq f(n,m) \leq cg(n,m) \text{ for all } n\geq n_0 \text{ or } m\geq m_0 \}$.
 
 $\Theta(g(n,m)) = \{f(n,m):\exists c_1,c_2,n_0,m_0 > 0 \text{ such that } 0\leq c_1g(n,m) \leq f(n,m) \leq c_2g(n,m) \text{ for all } n\geq n_0 \text{ or } m\geq m_0 \}$.
 
-$\Omega(g(n,m)) = \{f(n,m):\exists c,n_0,m_0 > 0 \text{ such that } 0 \leq cg(n,m) \leq f(n,m)  \text{ for all } n\geq n_0 \text{ or } m\geq m_0 \}​$.
+$\Omega(g(n,m)) = \{f(n,m):\exists c,n_0,m_0 > 0 \text{ such that } 0 \leq cg(n,m) \leq f(n,m)  \text{ for all } n\geq n_0 \text{ or } m\geq m_0 \}$.
 
 #### 3.2-4
 
@@ -235,9 +235,9 @@ $$p(n) = \sum_{i = 0}^d a_i n^i,$$ where $d \geq 0, a_i$ are constants and $a_d 
 
 #### 3-1.a
 
-Consider ​$p(n)/n^{d} = \sum_{i = 0}^d a_i n^{i-d}$
+Consider $p(n)/n^{d} = \sum_{i = 0}^d a_i n^{i-d}$
 
-$p(n) \leq cn^k \implies \sum_{i = 0}^d a_i n^{i-d} \leq c​$ 
+$p(n) \leq cn^k \implies \sum_{i = 0}^d a_i n^{i-d} \leq c$ 
 
 $c = a_d + b \geq  \sum_{i = 0}^{d-1} a_i n^{i-d}$
 
@@ -257,7 +257,7 @@ Using the above, a,b,c,d,e are self explanatory. (Set b=-1 for Omega)
 
 ### 3-2 Relative Asymptotic Growths
 
-Is $A$ $O,o,\Omega,\omega,\Theta$ of $B$? Assume $k ≥ 1, \epsilon > 0, c > 1​$ are constants.
+Is $A$ $O,o,\Omega,\omega,\Theta$ of $B$? Assume $k ≥ 1, \epsilon > 0, c > 1$ are constants.
 
 
 |  A   |  B   | $O$ | $o$  | $\Omega$ |   $\omega$   |  $\Theta$    |
@@ -281,7 +281,7 @@ $n!$
 
 $n2^n$
 
-$e^n​$
+$e^n$
 
 $2^n$
 
@@ -295,11 +295,11 @@ $\lg{n}^{\lg{n}}$
 
 $2^{\sqrt{2\lg{n}}}$
 
-$2^{\lg^*{n}}​$
+$2^{\lg^*{n}}$
 
 
 
-$n^3​$
+$n^3$
 
 $n^2$, $4^{\lg(n)}$
 
@@ -309,13 +309,13 @@ $n$, $2^{\lg(n)}$
 
 
 
-$\ln(n)​$
+$\ln(n)$
 
 $\ln(\ln(n))$
 
-$\lg^*{n}​$
+$\lg^*{n}$
 
-$\lg^*{(\lg{n})}​$
+$\lg^*{(\lg{n})}$
 
 
 
@@ -329,11 +329,11 @@ $f(n) = O(g(n))$ does not imply $g(n) = O(g(n))$, consider $f(n) = n$ $g(n) = n^
 
 #### 3-4.b
 
-$f(n) + g(n)​$ does not equal $\Theta(\min(f(n),g(n)))​$, consider $n + n^5​$
+$f(n) + g(n)$ does not equal $\Theta(\min(f(n),g(n)))$, consider $n + n^5$
 
 #### 3-4.c
 
-$f(n) =O(g(n))​$ implies $\lg{f(n)} = O(\lg{g(n)})​$, where $f(n), g(n) \geq 1​$ for sufficiently large $n \geq n_0​$
+$f(n) =O(g(n))$ implies $\lg{f(n)} = O(\lg{g(n)})$, where $f(n), g(n) \geq 1$ for sufficiently large $n \geq n_0$
 
 $1 \leq f(n) \leq cg(n) \implies $ $\lg{f(n)} \leq \lg{c} + \lg{g(n)}\leq c_2\lg{g(n)}$
 
@@ -381,17 +381,17 @@ Thus, $f(n) + o(f(n)) = \Theta(f(n))$
 
 
 
-$\Omega ^ {\infty}​$ (read "omega infinity") for this alternative definition. We say that $f(n) = {\Omega}^{\infty}(g(n))​$ if there exists
-a positive constant $c​$ such that $f(n) \ge cg(n) \ge 0​$ for infinitely
-many integers $n​$.
+$\Omega ^ {\infty}$ (read "omega infinity") for this alternative definition. We say that $f(n) = {\Omega}^{\infty}(g(n))$ if there exists
+a positive constant $c$ such that $f(n) \ge cg(n) \ge 0$ for infinitely
+many integers $n$.
 
 #### 3-5.a INCOMPLETE
 
 Given $f(n), g(n)$ are asymptotically non-negative
 
-Show that either $f(n) = O(g(n))​$ or $f(n) = {\Omega}^{\infty}(g(n))​$ or both, 
-whereas this is not true if we use $\Omega​$ in place of 
-${\Omega}^{\infty}​$.
+Show that either $f(n) = O(g(n))$ or $f(n) = {\Omega}^{\infty}(g(n))$ or both, 
+whereas this is not true if we use $\Omega$ in place of 
+${\Omega}^{\infty}$.
 
 Is it possible for both? $f(n) = O(g(n)), \Omega^{\infty}(g(n))$, $c_1g(n) \leq f(n) \leq c_2g(n)$. Consider $f(n) = n, g(n) = n$
 
@@ -439,7 +439,7 @@ $$
 
 If $f$ is $\tilde\Omega$ and $\tilde O$ of $g$ for $n \ge n_1$ and $n \ge n_2$ respectively, then choose $n_0 = \max (n_1,n_2)$ for $\tilde\Theta$
 
-#### and maintain all other constants the same.
+and maintain all other constants the same.
 
 ### 3-6 Iterated Functions *
 
@@ -460,9 +460,9 @@ $$
 
 Interesting:
 
-$f(n) = n^{1/k}​$ for $k \ge 2​$ 
+$f(n) = n^{1/k}$ for $k \ge 2$ 
 
-$f_c^*(n) = \Theta(\log_k{\log_c{n}})​$
+$f_c^*(n) = \Theta(\log_k{\log_c{n}})$
 
 #### 
 
@@ -490,7 +490,7 @@ for i = 1 to n
 
 #### 4.1-5
 
-A $O(n)​$ algorithm for finding the maximum subarray.
+A $O(n)$ algorithm for finding the maximum subarray.
 
 Some math first:
 
@@ -502,11 +502,11 @@ When incrementing $j$, the new max subarray leftmost element index will always b
 
 Additionally, if the new max subarray leftmost element index is $b_3 \not= b$, then it must be $> c$
 
-If $b < b_3 \le c​$ then $S(A[b_3…c]) < S(A[b…c])​$, and so if the new max subarray includes an element between $b​$ and $c​$ indices, then the leftmost element index must be $b​$ as this will maximize the sum. Otherwise if the new max subarray doesn't include an element between $b​$ and $c​$ indices, then the leftmost element index $> c​$
+If $b < b_3 \le c$ then $S(A[b_3…c]) < S(A[b…c])$, and so if the new max subarray includes an element between $b$ and $c$ indices, then the leftmost element index must be $b$ as this will maximize the sum. Otherwise if the new max subarray doesn't include an element between $b$ and $c$ indices, then the leftmost element index $> c$
 
 Knowing the above, we now have that the maximum subarray of $A[1…j+1]$ is either $A[b…c]$, or $A[b…j+1]$ or $A[i…j+1]$ where $i > c$.
 
-It will now be shown that the maximum subarray of the form $A[i…j+1]$ must either be $A[j+1]$ or the max subarray of $A[c+1….j]$ with $A[j+1]​$ added to it.
+It will now be shown that the maximum subarray of the form $A[i…j+1]$ must either be $A[j+1]$ or the max subarray of $A[c+1….j]$ with $A[j+1]$ added to it.
 
 Suppose the maximum subarray of $A[c+1…j]$ is $A[d…j]$ where $c+1 \le d$. The leftmost element index of the maximum subarray of $A[c+1…j+1]$ must be $d$ or $j+1$. If the index $d_1 < d$, then the maximum subarray of $A[c+1…j]$ would not be $A[d…j]$, it would be $A[d_1…j]$ as $S(A[d_1…d-1]) > 0$. If the leftmost element index was $d_2 > d, d_2 \not= j+1$, the maximum subarray of $A[c+1….j]$ would be $A[d_2…j]$ as $S(A[d…d_2-1]) <0$. Thus, we reduce the possible maximum subarrays of the form $A[i…j+1]$ to only two possibilities, $A[j+1]$, or the max subarray of $A[c+1…j]$ that contains $A[j]$ and has the element $A[j+1]$ appended to it.
 
@@ -582,7 +582,7 @@ We can increase the size of the square matrices by padding the additional rows a
 What is the largest $k$ such that if you can multiply $3 \times 3$ 
 matrices using $k$ multiplications (not assuming commutativity of 
 multiplication), then you can multiply $n \times n$ matrices is time
-$o(n^{\lg 7})​$? What would the running time of this algorithm be?
+$o(n^{\lg 7})$? What would the running time of this algorithm be?
 
 We would divide a matrices into 9 square sub-matrices of size $n/3$
 
@@ -596,7 +596,7 @@ Multiply a $kn\times n$ matrix by an $n\times kn$ matrix using Strassen's as an 
 
 We can also split the inputs into $k$ $n \times n$ matrices and perform Strassen's $k$ times and combine the results.
 
-For multiplying a $n \times kn$ matrix by an $kn \times n$ matrix, (output matrix has rows A x columns B), we output a $n \times n​$ matrix. 
+For multiplying a $n \times kn$ matrix by an $kn \times n$ matrix, (output matrix has rows A x columns B), we output a $n \times n$ matrix. 
 
 #### 4.2-7
 
@@ -685,7 +685,7 @@ T(n) & = & 4T(n/2) + n^2 \\
 & \ge & cn^2\lg{n}
 \end{eqnarray}
 $$
-Provided $c \le 1​$
+Provided $c \le 1$
 
 Let $c_1=1,\ c_2=2$, we proceed to prove the boundary cases.
 
@@ -718,7 +718,7 @@ S(m) & = & 3S(m/2) + m \\
 & \le & c_2m^{\lg{3}} -d_2m
 \end{eqnarray}
 $$
-Which is true provided, $d_2 \ge 2​$
+Which is true provided, $d_2 \ge 2$
 $$
 \begin{eqnarray}
 S(m) & = & 3S(m/2) + m \\
@@ -768,7 +768,7 @@ T(n) & = & n + 2n + 2^2n +…+ 2^{\lg{n}}n \\
 & \le & n^2
 \end{eqnarray}
 $$
-So guess that $T(n) = O(n^2)​$
+So guess that $T(n) = O(n^2)$
 $$
 \begin{eqnarray}
 T(n) & = & 4T(n/2+2)+n \\
@@ -804,7 +804,7 @@ d \ge 8c + 1
 $$
 Which is entirely possible, but let's first test boundary conditions anyway.
 
-We notice that for $n \le 8 ​$, $T(n)​$ isn't exactly going to be $\le​$ than $cn^2 - (8c+1)n=cn^2​$ assuming positive runtimes.
+We notice that for $n \le 8 $, $T(n)$ isn't exactly going to be $\le$ than $cn^2 - (8c+1)n=cn^2$ assuming positive runtimes.
 
 So we need to evaluate some base cases. (We skip over $n=1,2,3,4$ because they don't mean much and can't be evaluated properly)
 
@@ -816,7 +816,7 @@ $T(8) = 4T(4+2) + 8 = 112$
 
 $T(12) = 4T(6+2) + 12 = 460$
 
-Now if we let $n_0 = 12​$,
+Now if we let $n_0 = 12$,
 $$
 \begin{eqnarray}
 T(12) & = & 460 \le c\cdot12^2 - (8c+1)\cdot12 \\
@@ -824,13 +824,13 @@ T(12) & = & 460 \le c\cdot12^2 - (8c+1)\cdot12 \\
 472/48 & \le & c
 \end{eqnarray}
 $$
-So we prove that $T(n) = O(n^2)​$, for $n \ge n_0 = 12​$ and $c \ge 472/48​$, bounding $T(n) \le cn^2​$, given $T(5) = 5​$
+So we prove that $T(n) = O(n^2)$, for $n \ge n_0 = 12$ and $c \ge 472/48$, bounding $T(n) \le cn^2$, given $T(5) = 5$
 
-Curiously, $T(4) = -4/3​$ as implied by $T(4) = 4T(4/2 +2) + 4​$
+Curiously, $T(4) = -4/3$ as implied by $T(4) = 4T(4/2 +2) + 4$
 
 #### 4.4-6
 
-At each level $i$, there are $2^i$ nodes, and $i\choose m$ nodes of size $(2^m/3^i)n$. Remembering that there is also the $O(n)$ factor in $T(n)$, the root size is $n$ and the non recursive portion takes $cn$ time. Thus, we can compute the total running time $T_i(n)$ at level $i​$ as
+At each level $i$, there are $2^i$ nodes, and $i\choose m$ nodes of size $(2^m/3^i)n$. Remembering that there is also the $O(n)$ factor in $T(n)$, the root size is $n$ and the non recursive portion takes $cn$ time. Thus, we can compute the total running time $T_i(n)$ at level $i$ as
 $$
 \begin{eqnarray}
 T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{\frac{2^mn}{3^i}} \\
@@ -844,7 +844,7 @@ However, $T_i(n) = cn$ only when $i \le \lceil \log_{3}{n} \rceil$, so if we onl
 #### 4.4-9
 Solve the recurrence $T(n) = T(\alpha n) + T((1-\alpha)n) + cn$, for $0<\alpha < 1$ and $c >0$
 
-At each level $i​$ until a certain depth, there are $2^i​$ nodes, and $i\choose m​$ nodes of size $(\alpha^m(1-\alpha)^i)n​$. Remembering that there is also the $O(n)​$ factor in $T(n)​$, the root size is $n​$ and the non recursive portion takes $cn​$ time. Thus, we can compute the total running time $T_i(n)​$ at level $i​$ as
+At each level $i$ until a certain depth, there are $2^i$ nodes, and $i\choose m$ nodes of size $(\alpha^m(1-\alpha)^i)n$. Remembering that there is also the $O(n)$ factor in $T(n)$, the root size is $n$ and the non recursive portion takes $cn$ time. Thus, we can compute the total running time $T_i(n)$ at level $i$ as
 $$
 \begin{eqnarray}
 T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{(\alpha^m(1-\alpha)^i)n} \\
@@ -859,7 +859,7 @@ The longest path from root to leaf is $\log_{1/\alpha_1}(n)$, where $\alpha_1 = 
 
 We see that
 
- $T_i(n) = cn​$ for $i \le \lceil{log_{1/\alpha_0}(n)}\rceil​$, and $T_i(n) \le cn​$ for $\lceil{log_{1/\alpha_0}(n)}\rceil \le i \le \lceil{log_{1/\alpha_1}(n)}\rceil​$
+ $T_i(n) = cn$ for $i \le \lceil{log_{1/\alpha_0}(n)}\rceil$, and $T_i(n) \le cn$ for $\lceil{log_{1/\alpha_0}(n)}\rceil \le i \le \lceil{log_{1/\alpha_1}(n)}\rceil$
 
 As $T(n) = \sum^{\lceil{log_{1/\alpha_1}(n)}\rceil}_{i=0}T_i(n)$ and all $T_i(n) > 0$.
 
@@ -889,7 +889,7 @@ T(n) & \le & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha)n\lg(1-\alpha) + cn\\
 & \le & dn\lg(n) 
 \end{eqnarray}
 $$
-This is true as both terms with $\lg(\alpha)​$ and $\lg(1-\alpha)​$ are negative and provided that $d​$ is sufficiently large enough to reduce $cn​$. To bound $d​$, we do the following
+This is true as both terms with $\lg(\alpha)$ and $\lg(1-\alpha)$ are negative and provided that $d$ is sufficiently large enough to reduce $cn$. To bound $d$, we do the following
 $$
 \begin{eqnarray}
 dn\lg(n) & \ge & dn\lg(n) + d\alpha n \lg(\alpha) + d(1-\alpha) n \lg(1-\alpha) + cn \\
@@ -948,7 +948,7 @@ $$
 
 Examples of $f(n)$, values of $a,b$ in $T(n) = aT(n/b) + f(n)$ such that $f(n) = \Omega(n^{\log_a{b}-\epsilon})$, but the regularity constraint $af(n/b) \le cf(n)$ is not met. (Note $c<1$)
 
-Consider $n(2-\sin(n))​$
+Consider $n(2-\sin(n))$
 
 #### 4.6-1 INCOMPLETE
 
@@ -956,7 +956,7 @@ $n_j = \lceil{n_{j-1}/b}\rceil$, where $n_0 = n$
 
 An exact expression can be derived
 
-Consider $n = b^m + (n-b^m)​$, where $m = \lfloor{\log_b{n}}\rfloor​$
+Consider $n = b^m + (n-b^m)$, where $m = \lfloor{\log_b{n}}\rfloor$
 
 Then $n_1 = \lceil{b^{m-1}+\frac{n-b^m}{b}}\rceil = b^{m-1} + \lceil{\frac{n-b^m}{b}}\rceil$ as $b^{m-1}$ is not fractional. Based on this intuition, I claim that
 $$
@@ -979,15 +979,92 @@ $$
 
 #### 5.1-3
 
-Given the procedure Biased-Random that returns 0 with probability $p$ and $1$ with probability $1-p$, for $0 < p < 1$, give an algorithm that uses Biased-Random as a sub-routine and returns an unbiased answer where $0$ returns with probability $1/2$ and $1$ returns with probability $1/2$.
+#### 5.3-5
 
-What is the expected running time in terms of $p​$?
+Probability that randomly choosing $n$ elements from the set ${1,2,…n^3}$ such that all $n$ are unique is
 
-$p + (1/2 - p)$
+$(1)(1-1/n^3)(1-2/n^3)…(1-(n-1)/n^3)=n^3(n^3-1)(n^3-2)…(n^3-n+1)/(n^3)^n$
 
-$p(1-p) =p-p^2$
+As choosing the first element is arbitrary, the next one you must choose one that isn't the first, so complement of choosing the first is $1-1/n^3$ and so forth...
 
-123			4
+That probability is more than $(1-n/n^3)^n=(1-1/n^2)^n \geq 1-1/n$
 
-1234 1234 1234 1234
+Last step holds due to $(1-x)^n \geq 1-nx$
+
+#### 5.3-7
+
+Let RS(m,n) denote the randomized algorithm that randomly selects a $m$ sized subset of $n$ unique elements.
+
+We will prove by induction that the probability of a particular permutation from RS(m,n) occuring is $m!/n!$
+
+$RS(0,0) = \O$, the empty set all the time. $0!/0! = 1$, so this base case works
+
+Assuming that $RS(m-1,n-1)$ randomly selects a $(m-1)$-subset $S'$ with probability $(m-1)!/(n-1)!$
+
+When we set $i=Random(1,n)$
+
+If $i = $ any of the $m-1$ terms in $S'$ or $i=n$, the returned set $S$ is $RS(m-1,n-1) \cup \{n\}$, with the probability of this union occuring being $m/n$ as there are $m$ possibilities out of $n$ that $i$ could be that would lead to this
+
+The probability of a particular set returned from $RS(m-1,n-1) \cup \{n\}$ is then $(m-1)!/(n-1)! \cdot m/n= m!/n! $
+
+If $i=j$ where $j \notin S'$ , that occurs with probability $1-m/n = (n-m)/n$.
+
+The probability of a particular set returned of the form $RS(m-1,n-1) \cup \{i\}$ is then $(m-1)!/(n-1)! \cdot (n-m)/n= (m-1)!(n-m)/n! $
+
+There are $n-m$ possible values of $i$, each with the same probability of being chosen, so for a particular $i$, the returned set has probability of $(m-1)!(n-m)/n!/(n-m) = m!/n!$
+
+Thus, each $m$-subset is equally likely to appear and we achieve a uniform randomness.
+
+### 5-2
+
+#### 5-2.a
+
+```pseudocode
+Random-Search(A,x)
+n = A.length
+S = Ø
+while (|S| != n)
+	i = Random(1,n)
+	if (x == A[i])
+		return i
+	else
+		S = S union {i}
+return NIL
+```
+
+#### 5-2.b
+
+It's modelled by Bernoulli trials, where probability of success is $1/n$, therefore the expected number of trials before success is $1/1/n = n$
+
+#### 5-2.c
+
+$1/(k/n) =n/k$
+
+#### 5-2.d
+
+#### 5-2.e
+
+Average-case running time of Deterministic-Linear-Search is 1/n+2/n+…+n/n = $(n+1)/2$
+
+Worse-case running time is also $n$
+
+#### 5-2.f
+
+Worst-case run time is if all desired values are at the end of the array, so $n-k+1$
+
+Average case is a little harder
+
+Not sure why, but Probability of $X_i=$ indicator random variable that the $ith$ element is a match is $1/(k+1)$
+
+Average case run time is $(n+1)/(k+1)$
+
+#### 5-2.h
+
+$k=0$, worst-case run time is $n$, expected run time is still $n$
+
+$k=1$, worst-case run time is $n$, expected run time is $(n+1)/2$
+
+$k\geq1$, worst-case and average run time is $(n+1)/(k+1)$
+
+
 

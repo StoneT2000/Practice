@@ -6,21 +6,21 @@
 
 $A\subseteq B$ means that A is a subset of B, all elements of A are in B (or $x \in A \implies x\in B$)
 
-$A\subset B$ means that all elements of A are in B but $A \not= B​$
+$A\subset B$ means that all elements of A are in B but $A \not= B$
 
 ## 3 Growth of Functions
 
-$\Theta(g(n))​$ denotes the set of functions = $\{f(n):\exists c_1,c_2,n_0 > 0 \text{ such that } 0 \leq c_1g(n)\leq f(n) \leq c_2g(n) \text{ for all } n\geq n_0\}​$
+$\Theta(g(n))$ denotes the set of functions = $\{f(n):\exists c_1,c_2,n_0 > 0 \text{ such that } 0 \leq c_1g(n)\leq f(n) \leq c_2g(n) \text{ for all } n\geq n_0\}$
 
 Essentially saying that $f(n)$ is equal to $g(n)$ within a constant factor, and so $g(n)$ is an **asymptotically tight bound** for $f(n)$. $f(n)$ must also be **asymptotically non-negative** ($f(n) \geq 0$ for sufficiently large $n$)
 
 
 
-$O(g(n))=​$$\{f(n):\exists c,n_0 > 0 \text{ such that } 0 \leq f(n) \leq cg(n) \text{ for all } n\geq n_0\}​$. **An asymptotic upper bound**
+$O(g(n))=$$\{f(n):\exists c,n_0 > 0 \text{ such that } 0 \leq f(n) \leq cg(n) \text{ for all } n\geq n_0\}$. **An asymptotic upper bound**
 
-$\Omega(g(n))=​$$\{f(n):\exists c,n_0 > 0 \text{ such that } 0 \leq cg(n) \leq  f(n) \text{ for all } n\geq n_0\}​$. **An asymptotic lower bound**
+$\Omega(g(n))=$$\{f(n):\exists c,n_0 > 0 \text{ such that } 0 \leq cg(n) \leq  f(n) \text{ for all } n\geq n_0\}$. **An asymptotic lower bound**
 
-Example of asymptotically tightness: $3n^3 + 3n-3 = O(n^3)​$ is tight if $3n^3+3n-3 = \Theta(n^3)​$ as well, true due to the following
+Example of asymptotically tightness: $3n^3 + 3n-3 = O(n^3)$ is tight if $3n^3+3n-3 = \Theta(n^3)$ as well, true due to the following
 
 $c_1n^3\leq 3n^3 + 3n - 3\leq c_2n^3 \implies c_1\leq 3 + \frac{3}{n^2} - \frac{3}{n^3} \leq c_2$. As $c_1,c_2$ are constant and tightly bound a function above and below, we have that $3n^3 + 3n - 3 = O(n^3)$ is tight.
 
@@ -42,7 +42,7 @@ Proof:
 
 We first prove the forwards direction,
 
-If $f(n)=\Theta(g(n))​$, then $0 \leq c_1g(n) \leq f(n) \leq c_2g(n)​$ for all $n\geq n_0​$ for constants $c_1,c_2,n_0​$.
+If $f(n)=\Theta(g(n))$, then $0 \leq c_1g(n) \leq f(n) \leq c_2g(n)$ for all $n\geq n_0$ for constants $c_1,c_2,n_0$.
 
 As  $0 \leq f(n) \leq c_2g(n)$, by definition we have $f(n) = O(g(n))$
 
@@ -50,7 +50,7 @@ $0 \leq c_1g(n) \leq f(n)$, by definition we have $f(n) = \Omega(g(n))$
 
 Backwards direction
 
-If $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$, we have that $0 \leq f(n) \leq c_2g(n)$ for $n \geq n_2$, $0 \leq c_1g(n) \leq f(n)$ for $n \geq n_1​$
+If $f(n) = O(g(n))$ and $f(n) = \Omega(g(n))$, we have that $0 \leq f(n) \leq c_2g(n)$ for $n \geq n_2$, $0 \leq c_1g(n) \leq f(n)$ for $n \geq n_1$
 
 Let $n_0 = max(n_1,n_2)$
 
@@ -70,11 +70,11 @@ $4n^2 + \Theta(n) = \Theta(n^2)$, which is fine as there is  always a way to cho
 
 Not all bounds provided by $O$-notation is asymptotically tight, so this is where $o$-notation comes in handy.
 
-E.g, we have that $3n^2 = O(n^2)​$ is asymptotically tight as they are within a constant factor of each other
+E.g, we have that $3n^2 = O(n^2)$ is asymptotically tight as they are within a constant factor of each other
 
 $o(g(n))= $ $\{f(n):\text{ for every } c>0, \exists n_0 > 0 \text{ such that } 0 \leq f(n) < cg(n)\text{ for all } n\geq n_0\}$. **An asymptotic upper bound that is not tight**. e.g $n^2 = o(n^3), n^2 \not= o(n^2)$. Difference with $O$ is that this holds for all $c$.
 
-Intuitively, $f(n)​$ becomes insignificant: $\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)}= 0 ​$, another definition of o-notation
+Intuitively, $f(n)$ becomes insignificant: $\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)}= 0 $, another definition of o-notation
 
 $\omega(g(n))= $$\{f(n):\text{ for every } c>0, \exists n_0 > 0 \text{ such that } 0 \leq cg(n) < f(n) \text{ for all } n\geq n_0\}$. **An asymptotic lower bound that is not tight**.
 
@@ -94,17 +94,17 @@ Given $f(n) = o(g(n))$, then $0 \leq f(n) < cg(n)$ for every $c$ and for all $n 
 
 Then choose a $c_1 =$  a particular $c$ and $n_0$
 
-Then clearly $0 ≤ f(n) < c_1g(n)​$ for $n≥n_0​$, implying $0 \leq f(n) \leq c_1g(n)​$ for the same $n​$, so $f(n) = O(g(n))​$. $\leq​$ is more loose than $<​$ so this is allowed.
+Then clearly $0 ≤ f(n) < c_1g(n)$ for $n≥n_0$, implying $0 \leq f(n) \leq c_1g(n)$ for the same $n$, so $f(n) = O(g(n))$. $\leq$ is more loose than $<$ so this is allowed.
 
 #### Comparing Functions
 
 **Transitivity:**
 
-$f(n) = X(g(n))​$ and $g(n) = X(h(n))​$ $\implies​$ $f(n) = X(h(n))​$, where $X \in \{\Theta, O, \Omega, o, \omega \}​$
+$f(n) = X(g(n))$ and $g(n) = X(h(n))$ $\implies$ $f(n) = X(h(n))$, where $X \in \{\Theta, O, \Omega, o, \omega \}$
 
 Proof: $f(n) = X(g(n)) \implies 0 \leq c_1g(n) \leq f(n) \leq c_2g(n)$
 
-$g(n) = X(h(n)) \implies 0 \leq t_1h(n) \leq g(n) \leq t_2h(n) \implies 0 \leq c_1t_1h(n) \leq c_1g(n), \space c_2g(n) \leq c_2t_2h(n)​$
+$g(n) = X(h(n)) \implies 0 \leq t_1h(n) \leq g(n) \leq t_2h(n) \implies 0 \leq c_1t_1h(n) \leq c_1g(n), \space c_2g(n) \leq c_2t_2h(n)$
 
 Then $0 \leq c_1t_1h(n) \leq f(n) \leq c_2t_2h(n)$, and as $c_1t_1, c_2t_2$ are constants, this implies $f(n) = X(h(n))$
 
@@ -114,11 +114,11 @@ $f(n) = X(g(n))$ and $g(n) = X(h(n))$ $\implies$ $f(n) = X(h(n))$, where $X \in 
 
 **Symmetry:**
 
-$f(n) = \Theta(g(n))​$ if and only if $g(n) = \Theta(f(n))​$
+$f(n) = \Theta(g(n))$ if and only if $g(n) = \Theta(f(n))$
 
 **Transpose Symmetry:**
 
-$f(n) = O(g(n))​$ if and only if $g(n) = \Omega(f(n))​$
+$f(n) = O(g(n))$ if and only if $g(n) = \Omega(f(n))$
 
 $f(n) = o(g(n))$ if and only if $g(n) = \omega(f(n))$
 
@@ -130,7 +130,7 @@ $f(n) = O(g(n))$ is like $a \leq b$
 
 $f(n) = \Theta(g(n))$ is like $a \geq b$
 
-$f(n) = o(g(n))​$ is like $ a < b​$
+$f(n) = o(g(n))$ is like $ a < b$
 
 $f(n) = \omega(g(n))$ is like $a > b$
 
@@ -158,19 +158,19 @@ $f(n)$ is **polylogarithmically bounded** if $f(n) = O(\lg^k(n))$ ($\lg$ refers 
 
 $n^b = o(a^n)$ as $lim_{n \rightarrow \infty} \frac{n^b}{a^n} = 0$ for all $a,b$ and $a>1$
 
-$n! = \sqrt{2\pi n} (\frac{n}{e})^n (1 + \Theta(\frac{1}{n}))​$ **Stirling's Approximation**
+$n! = \sqrt{2\pi n} (\frac{n}{e})^n (1 + \Theta(\frac{1}{n}))$ **Stirling's Approximation**
 
 $n! = \sqrt{2\pi n}(\frac{n}{e})^n e^{\alpha_n}$ Where $\frac{1}{12n+1} < \alpha_n < \frac{1}{12n}$
 
 **Functional iteration**
 
-$f^{(i)}(n)​$ denotes the function $f(n)​$ iteratively applied $i​$ times to an initial value of $n​$. Can be recursively defined as $f^{(i)}(n)​$ = $f(f^{(i-1)}(n)))​$ if $i>0​$, 
+$f^{(i)}(n)$ denotes the function $f(n)$ iteratively applied $i$ times to an initial value of $n$. Can be recursively defined as $f^{(i)}(n)$ = $f(f^{(i-1)}(n)))$ if $i>0$, 
 
 **The iterated logarithm function**
 
 $\lg^*n$ (log star of $n$) denotes the iterated logarithm function
 
-$\lg^*n = \min\{ i \geq 0 : \lg^{(i)}n \leq 1\}$; So $\lg^*2 = 1, \lg^*16 = 3​$ (lg(lg(lg(16))) = 1)
+$\lg^*n = \min\{ i \geq 0 : \lg^{(i)}n \leq 1\}$; So $\lg^*2 = 1, \lg^*16 = 3$ (lg(lg(lg(16))) = 1)
 
 
 
@@ -238,7 +238,7 @@ However, finding the maximum subarray that crosses the midpoint is a different p
 
 ![fig4.4](assets/fig4.4.png)
 
-It can be approached by finding the maximum subarray of $A[i…mid]$ and $A[mid+1…j]$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]$ and $A[mid+1]$, we can solve this in $\Theta(n)​$ time.
+It can be approached by finding the maximum subarray of $A[i…mid]$ and $A[mid+1…j]$ and combining the two, combining if they are larger than 0. As they must include element $A[mid]$ and $A[mid+1]$, we can solve this in $\Theta(n)$ time.
 
 So a recursive solution can be done by finding the maximum subarray of $A[low…mid]$ and $A[mid+1…high]$ where $mid = floor((low+high)/2)$, and the maximum subarray of the arrays that cross the midpoint. Which ever of those maximum subarrays have the highest sum is then returned at each recursive step.
 
@@ -268,25 +268,25 @@ For now, assume $n$ is a power of 2. For computing $C = A \cdot B$, consider a 4
 
 The equation above shows that
 
-$C_{11} = A_{11} \cdot B_{11} + A_{12} \cdot B_{21}​$
+$C_{11} = A_{11} \cdot B_{11} + A_{12} \cdot B_{21}$
 
-$C_{12} = A_{11} \cdot B_{12} + A_{12} \cdot B_{22}​$
+$C_{12} = A_{11} \cdot B_{12} + A_{12} \cdot B_{22}$
 
-$C_{21} = A_{21} \cdot B_{11} + A_{22} \cdot B_{21}​$
+$C_{21} = A_{21} \cdot B_{11} + A_{22} \cdot B_{21}$
 
 $C_{22} = A_{21} \cdot B_{12} + A_{22} \cdot B_{22}$
 
-These each specify the multiplications of two $n/2 \times n/2$ matrices and the addition of their $n/2 \times n/2$ products. A simple recursive algorithm can then be written, with the the base case being a matrix of size $1 \times 1​$
+These each specify the multiplications of two $n/2 \times n/2$ matrices and the addition of their $n/2 \times n/2$ products. A simple recursive algorithm can then be written, with the the base case being a matrix of size $1 \times 1$
 
 The partitioning part of the algorithm can be done in $\Theta(1)$ time by using index calculations instead of performing an $\Theta(n^2)$ copying algorithm.
 
 If the runtime of the algorithm is $T(n)$, then multiplying the matrices in the subproblems takes $T(n/2)$ time. Performing the additions of the matrices, each of size $n/2 \times n/2$ implies $n^2/4$ additions each, so this is done in $\Theta(n^2)$. 
 
-The total run time of the algorithm $T(n)​$ is then
+The total run time of the algorithm $T(n)$ is then
 $$
 T(n) = 8T(n/2) + \Theta(n^2)
 $$
-Note that the $8​$ can't be removed as it impacts the recursive part of the run time. 
+Note that the $8$ can't be removed as it impacts the recursive part of the run time. 
 
 Using the master theorem that will be explained later, it can be shown that $T(n) = \Theta(n^3)$, no real improvement to the run time unfortunately. 
 
@@ -298,12 +298,12 @@ Strassen's method improves the run time by making the recursion tree slightly le
 >
 > in this book.) It has four steps:
 
-1. Divide the input matrices $A,B​$ and the output matrix $C​$ into $n/2 \times n/2​$ sub-matrices (like 4 quadrants). This takes $\Theta(1)​$ time when using index calculations.
+1. Divide the input matrices $A,B$ and the output matrix $C$ into $n/2 \times n/2$ sub-matrices (like 4 quadrants). This takes $\Theta(1)$ time when using index calculations.
 2. Create 10 matrices $S_1,…,S_{10}$, each of which is $n/2 \times n/2$ and is the sum or difference of two matrices created in step 1. These can all be created in $\Theta(n^2)$ time as they are matrix additions.
 3. Using the sub-matrices from step 1, and $S_1,…,S_{10}$, recursively compute 7 matrix products $P_1,…,P_7$, each of size $n/2 \times n/2$.
 4. Compute the output matrix $C$'s sub-matrices $C_{11}, C_{12}, C_{21}, C_{22} $ by adding and subtracting various matrices $P_i$ and then combine them into $C$. The addition of matrices and then combining $C_{11},…,C_{22}$ takes $\Theta(n^2)$ time.
 
-This then shows that $T(n) = 7T(n/2) + \Theta(n^2)​$, we were able to trade off one matrix multiplication with a constant number of matrix additions.
+This then shows that $T(n) = 7T(n/2) + \Theta(n^2)$, we were able to trade off one matrix multiplication with a constant number of matrix additions.
 
 Using the master theorem, it can be shown that $T(n) = \Theta(n^{\lg{7}})$
 
@@ -311,7 +311,7 @@ Details of steps 2,3, and 4.
 
 **Step 2:**
 
-$S_1 = B_{12}-B_{22}​$
+$S_1 = B_{12}-B_{22}$
 
 $S_2 = A_{11} + A_{12}$
 
@@ -325,13 +325,13 @@ $S_6 = B_{11} + B_{22}$
 
 $S_7 = A_{12} - A_{22}$
 
-$S_8 = B_{21} + B_{22}​$
+$S_8 = B_{21} + B_{22}$
 
 $S_9 = A_{11} - A_{21}$
 
-$S_{10} = B_{11} + B_{12}​$
+$S_{10} = B_{11} + B_{12}$
 
-A total of 10 sums of two $n/2 \times n/2​$ matrices are computed, so a total of $10 \cdot \frac{n^2}{4}​$ additions are made, $\Theta(n^2)​$ run time.
+A total of 10 sums of two $n/2 \times n/2$ matrices are computed, so a total of $10 \cdot \frac{n^2}{4}$ additions are made, $\Theta(n^2)$ run time.
 
 **Step 3:**
 
@@ -349,13 +349,13 @@ $P_6 = S_7 \cdot S_8 = A_{12} \cdot B_{21} + A_{12} \cdot B_{22} - A_{22} \cdot 
 
 $P_7 = S_9 \cdot S_{10} = A_{11} \cdot B_{11} + A_{11} \cdot B_{12} - A_{21} \cdot B_{11} - A_{21} \cdot B_{12}$
 
-As the $S_i​$'s are known, only 7 matrix multiplications are needed. Additionally, each of the multiplications are sub problems so these are 7 recursive matrix multiplications.
+As the $S_i$'s are known, only 7 matrix multiplications are needed. Additionally, each of the multiplications are sub problems so these are 7 recursive matrix multiplications.
 
 **Step 4:**
 
 $C_{11} = P_5 + P_4 - P_2 + P_6$
 
-$C_{12} = P_1 + P_2​$
+$C_{12} = P_1 + P_2$
 
 $C_{21} = P_3 + P_4$
 
@@ -391,7 +391,7 @@ $T(n) = 2T(\lfloor n/2 \rfloor ) +n$
 
 We guess that $T(n) = O(n\lg{n})$, so we must show that $T(n) \le cn\lg{n}$ for some $c > 0$ for all $n \ge n_0$
 
-We assume that this bound holds for all $n > m = \lfloor{n/2}\rfloor​$, then we have through manipulation and substitution
+We assume that this bound holds for all $n > m = \lfloor{n/2}\rfloor$, then we have through manipulation and substitution
 
 
 $$
@@ -468,11 +468,11 @@ Letting $O(n) \le cn$, we have $T(n) \le T(n/3) + T(2n/3) + cn$
 
 The longest path from a root to a leaf is the when we follow the $T(2n/3)$ term, so $n \rightarrow 2n/3 \rightarrow n(2/3)^2 \rightarrow …\rightarrow 1$
 
-$n(2/3)^k = 1​$, implying $k = \log_{3/2}{n}​$ is the height of the tree. 
+$n(2/3)^k = 1$, implying $k = \log_{3/2}{n}$ is the height of the tree. 
 
 However, this tree isn't a complete binary tree and not all of its leaves go to a depth of $k$, and there aren't $2^{\log_{3/2}{n}}= n^{\log_{3/2}{2}}$ leaves at depth $k$
 
-We might expect that as $\log_{3/2}{2} > 1​$, the runtime is $\omega(n\lg{n})​$. But, remember it's not a complete binary tree. Not all levels contribute a cost of $cn​$ due to the non-binaryness of the tree. The missing internal nodes that would make it binary allow us to make a good guess that the runtime is indeed $O(n\lg{n})​$, and so we tolerate the sloppiness here.
+We might expect that as $\log_{3/2}{2} > 1$, the runtime is $\omega(n\lg{n})$. But, remember it's not a complete binary tree. Not all levels contribute a cost of $cn$ due to the non-binaryness of the tree. The missing internal nodes that would make it binary allow us to make a good guess that the runtime is indeed $O(n\lg{n})$, and so we tolerate the sloppiness here.
 
 Guessing that $T(n) = O(n\lg{n})$, we assume that $T(n) \le dn\lg{n}$, for some $d>0$
 $$
@@ -483,15 +483,15 @@ T(n) & \le & d(n/3)\lg(n/3) + d(2n/3)\lg(2n/3) + cn \\
 & \le & dn\lg(n)
 \end{eqnarray}
 $$
-Where the last line is true provided that $\frac{c}{\lg(3)-2/3} \le d​$
+Where the last line is true provided that $\frac{c}{\lg(3)-2/3} \le d$
 
-So we show that $T(n) = O(n\lg{n})​$ (you can figure out the boundary details yourself)
+So we show that $T(n) = O(n\lg{n})$ (you can figure out the boundary details yourself)
 
 **More Mathematical Method**
 
 We can apply a mathematical treatment to this problem to show that it is clearly $O(n\lg{n})$
 
-Consider at depth level $i$, there are normally $2^i$ nodes, unless the problem subdivides to a size $<1$, of which it's a constant time problem of time $T(1)=1​$ or less.
+Consider at depth level $i$, there are normally $2^i$ nodes, unless the problem subdivides to a size $<1$, of which it's a constant time problem of time $T(1)=1$ or less.
 
 Clearly, as the problem subdivides into a third or two thirds the original size, all nodes must be of size $(2^m/3^i)n$, where $i$ is the depth level, and $0 \le m \le i$
 
@@ -499,7 +499,7 @@ If $m=i$, that would mean we are looking at the nodes that were continuously spl
 
 Note that there are several ways in which a subproblem of size $(2^m/3^i)n$ can be achieved. There are in fact $i\choose{m}$ ways, which can be seen from a combinatorial argument. At each node, we create two child nodes that are either 1/3 or 2/3 of the original size. So at level $i$, we have created child nodes $i$ times, and so we choose a 1/3 or 2/3 subdivision of the original problem size $i$ times. The number of times we choose 2/3 is between $0$ and $i$, which is what $m$ is defined as. If we choose $1/3$, we don't change the numerator of $(2^m/3^i)n$, and just increment the denominator. Thus, for the $i$ different times we make that subdivision size decision, we can choose $m$ levels to make the decision to subdivide into 2/3 of the original size, leading to $i \choose m$ different appearances of the nodes of size $(2^m/3^i)n$ at level $i$.
 
-To recap, at each level $i​$, there are $2^i​$ nodes, and $i\choose m​$ nodes of size $(2^m/3^i)n​$. Remembering that there is also the $O(n)​$ factor in $T(n)​$, the root size is $n​$ and the non recursive portion takes $cn​$ time. Thus, we can compute the total running time $T_i(n)​$ at level $i​$ as
+To recap, at each level $i$, there are $2^i$ nodes, and $i\choose m$ nodes of size $(2^m/3^i)n$. Remembering that there is also the $O(n)$ factor in $T(n)$, the root size is $n$ and the non recursive portion takes $cn$ time. Thus, we can compute the total running time $T_i(n)$ at level $i$ as
 $$
 \begin{eqnarray}
 T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{\frac{2^mn}{3^i}} \\
@@ -508,9 +508,9 @@ T_i(n) & = & c \sum_{m=0}^{2^i} {i \choose m}{\frac{2^mn}{3^i}} \\
 & = & cn
 \end{eqnarray}
 $$
-However, $T_i(n) = cn​$ only when $i \le \lceil \log_{3}{n} \rceil​$, the shortest path length from root to a leaf. We can say that $T_i(n) \le cn​$ for all $i​$.
+However, $T_i(n) = cn$ only when $i \le \lceil \log_{3}{n} \rceil$, the shortest path length from root to a leaf. We can say that $T_i(n) \le cn$ for all $i$.
 
-If we assume that we have a complete binary tree and all nodes of size less than 1 aren't disregarded, we can see that $T_i(n) = cn​$ for all $i​$, and this would mean that we will overestimate $T(n)​$. Then $T(n) \le cn\log_{3/2}{n}​$.
+If we assume that we have a complete binary tree and all nodes of size less than 1 aren't disregarded, we can see that $T_i(n) = cn$ for all $i$, and this would mean that we will overestimate $T(n)$. Then $T(n) \le cn\log_{3/2}{n}$.
 
 If we assume that the binary tree stops at $i = \log_3{n}$, then by summing all of the levels, we would be underestimating $T(n)$. Then $T(n) \ge cn\log_3{n}$
 
@@ -559,7 +559,7 @@ $T(n) = 3T(n/4)+ n\lg{n}$
 
 $n\lg{n} = \Omega(n^{log_4(3)+\epsilon})$, where $\epsilon \approx 0.2$ as we know $n\lg{n} = \Omega(n)=\Omega(n^{\log_4{3}}+\epsilon)$ ($\log_4{3} \approx 0.793$)
 
-The regularity condition is holds for $n\lg{n}$; for sufficiently large $n​$
+The regularity condition is holds for $n\lg{n}$; for sufficiently large $n$
 
 $3(n/4)\lg(n/4) \le c n \lg {n}$, of which $c = 3/4 < 1$ works. By case 3, the solution to the recurrence is $T(n) = \Theta(n\lg{n})$
 
@@ -612,11 +612,114 @@ In the hiring problem, we can't determine if the candidates re being presented t
 
 Each day, we randomly choose a candidate to interview. Now, we have enforced a random order.
 
-Generally, we call an algorithm randomized if its behavior is determined not only by its input but also by values produced by a **random-number-generator**. Assume we have such a generator called Random, where Random(a,b) returns an integer between a and b inclusive with equal probability.
+Generally, we call an algorithm **randomized** if its behavior is determined not only by its input but also by values produced by a **random-number-generator**. Assume we have such a generator called Random, where Random(a,b) returns an integer between a and b inclusive with equal probability.
 
 In practice, you will have a **pseudo-random-number-generator**, a deterministic algorithm that returns numbers that "look" statistically random.
 
 When analyzing the run time of a randomized algorithm, we take the expectation of the running time over the distribution of values returned by the random number generator. This is the **expected running time**.
 
 To recap, **average-case-running time** is for when the probability distribution is over the inputs of the algorithm (we know the likelihood of every possible input), and **expected-running-time** is for when the algorithm itself makes random choices.
+
+### 5.2 Indicator Random Variables
+
+Indicator random variables provide a convenient method to convert from probability to expectations
+$$
+I\{a\} = 
+\left\{
+\begin{eqnarray}
+1 && \text{if } A \text{ occurs}, \\
+0 && \text{if } A \text{ occurs}.
+\end{eqnarray}
+\right.
+$$
+Consider a coin flip, let $X_h$ be the indicator random variable associated with the coin turning up heads
+
+$X_h = I\{H\}$, which equals $1$ if heads, $0$ if tails (otherwise).
+$$
+\begin{eqnarray}
+E[X_h] && = && E[I\{H\}] \\
+&& = && 1 \cdot \Pr\{H\} + 0 \cdot \Pr\{T\} \\
+&& = && 1 \cdot (1/2) + 0 \cdot (1/2) \\
+&& = && 1/2
+\end{eqnarray}
+$$
+We can conclude with the lemma that $E[X_A] = \Pr\{A\}$ where $A$ is an event in sample space $A$, $X_A = I\{A\}$
+
+
+
+**Powerful technique of using this**. due to linearity of expectation (for example when find expected number of heads in $n$ tosses). It applies even when there is **dependence among variables**.
+
+Back to the hiring problem, we let $X_i$ be the indicator random variable $I\{\text{candidate i is hired}\}$
+
+As all candidates come in random order, any one of the candidates between $1$ to $i$ can be the best qualified of them all, meaning that there is a probability $1/i$ that candidate $i$ is better than candidates $1$ to $i-1$, so $\Pr\{\text{candidate i is hired}\} = 1/i$, implying $E[X_i] = 1/i$, implying $E[X] = X_1+X_2+…+X_n=ln(n)+O(1)$
+
+The last step being an mathematical approximation of the nth harmonic series.
+
+
+
+### 5.3 Randomized Algorithms
+
+We were able to determine average case run times for the hiring problem provided that the candidates arrived in random order. We can ensure this occurs for all inputs by randomizing our algorithm, by randomly permuting the input candidates to enforce randomization. This then ensures that for *any* input, the expected run time or hire times is $\ln{(n)}$.
+
+The original hiring algorithm is deterministic as its hire count depends on the input. Therefore, sometimes we might enter the worst case scenario. By randomizing the algorithm, we ensure that no particular input elicits the worst case behavior, with that only happening for an unlucky permutation. We now stabilize the perforamnce of the algorithm and reduce its variability in hiring count. 
+
+**Randomly Permuting Arrays**
+
+Permute by sorting involves assigning each element with a random priority, and then the elements are sorted by their priorities. The sorting takes $\Omega({n\lg{n}})$ time. This obtains a uniform random permutation (every permutation has equal probability of appearing).
+
+Proving that permutation by sorting obtains a uniform random permutation isn't as simple as showing that each element in the input array A[1…n] winds up in position $j$ with probability $1/n$ as that is not sufficient.
+
+Randomization in place is better in that it takes $O(n)$ time. Without altering the input array, it makes $n$ swaps, swapping $A[i]$ with a random element from the subarray $A[i…n]$
+
+Proving that this algorithm works by using the loop invariant that prior to the $ith$ iteration ($ith$ swap), the probability that the $(i-1)$ permutation of the $n$ elements is in the subarray $A[1…i-1]$ is $(n-i+1)!/n!$
+
+For the maintaince part of the proof procedure, we assume that the $(i-1)$ permutation coming from $A[1…i-1]$ occurs with probability $(n-i+1)!/n!$. The probability that the $i$ permutation comes from only $A[1…i]$ is the event of the assumption occuring and the event that the algorithm places $A[i]$ into $A[i]$. 
+
+The second event occurs with probability $1/(n-i+1)$ as there are $n-i+1$ elements left to choose to place into $A[i]$. So multiply the two events togehter and we have $(n-i)!/n!$ as the new probabilty and increment the iteration preserves the variant.
+
+At termination, we reach $i=n+1$, implying the probability of the $n$ permutation occuring is $1/n!$
+
+
+
+# SORTING AND ORDER STATISTICS
+
+![orderstats](assets/orderstats.png)
+
+The $i$th order statistic of a set of $n$ numbers is the $i$th smallest number in the set
+
+## 6 Heapsort
+
+The **(binary) heap** data structure is an array object that can be viewed as a complete binary tree. Each node of the tree corresponds with an element in an array. Filled at all levels except possibly the lowest level.
+
+$A.length$ gives number of elements in the array, $A.heap-size$ gives how many elements in the heap are stored. So $A$ may contain some extra numbers, but $A[1…A.heap-size]$ is the actual heap and its contents.
+
+Root of the tree is always $A[1]$
+
+Given index $i$, its parent node is $\lfloor i/2\rfloor$
+
+Left node is $2i$, right node is $2i+1$
+
+For efficiency, $2i$ can be calculated by shifting a bit to the left, and the right node can be done by shifting to the left and adding $1$ in the lower bit. Good implementations implement these as "macros" or "inline" procedures
+
+**Max-heap and min-heap** are two kinds of binary heaps, each satisfying a **heap-property**
+
+Max-heap: $A[Parent(i)] \geq A[i]$ for all $i \not=1$
+
+Min-heap: $A[Parent(i)] \leq A[i]$ for all $i \not=1$
+
+**height** of a node in a heap is max number of downward edges from the node to a leaf. Height of a heap is measured from the root.
+
+Several procedures for a max-heap
+
+Max-heapify: maintains heap
+
+Build-max-heap: Builds a max-heap from an unsorted input array
+
+Heapsort: sorts array in place
+
+Max-heap-insert, Heap-extract-max, Heap-increase-key, Heap-maximum: help implement a priority queue.
+
+
+
+
 
