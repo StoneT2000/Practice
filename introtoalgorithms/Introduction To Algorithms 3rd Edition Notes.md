@@ -1,3 +1,5 @@
+
+
 ## 0 Basic Maths I should probably know
 
 "$:$" means such that
@@ -7,6 +9,8 @@
 $A\subseteq B$ means that A is a subset of B, all elements of A are in B (or $x \in A \implies x\in B$)
 
 $A\subset B$ means that all elements of A are in B but $A \not= B$
+
+# I Foundations
 
 ## 3 Growth of Functions
 
@@ -569,7 +573,7 @@ $n^{\log_b{a}}=n$, but note that $n\lg{n}$ is not polynomially larger than $n$, 
 
 
 
-## Probabilistic Analysis and Randomized Algorithms
+## 5 Probabilistic Analysis and Randomized Algorithms
 
 ### 5.1 The hiring problem
 
@@ -681,7 +685,7 @@ At termination, we reach $i=n+1$, implying the probability of the $n$ permutatio
 
 
 
-# SORTING AND ORDER STATISTICS
+# II SORTING AND ORDER STATISTICS
 
 ![orderstats](assets/orderstats.png)
 
@@ -719,7 +723,203 @@ Heapsort: sorts array in place
 
 Max-heap-insert, Heap-extract-max, Heap-increase-key, Heap-maximum: help implement a priority queue.
 
+### 6.2 Maintaining Heap Property
 
+For a max heap, the max-heapify function works as follows
+
+It takes the heap array $A$ and an index $i$, and fixes the element at $A[i]$, floats it down to its correct position
+
+It's an recursive algorithm that checks amongst $A[i]$, and $A[left(i)],A[right(i)]$, which is the max value, and swaps $A[i]$ with the max value, and performs max-heapify at the position of where the max value was previously at.
+
+A **min-heapify** function would take the same input, and fixes the element at $A[i]$ by floating it down to its correct position.
+
+It's an recursive algorithm that checks instead for the smallest value, and swaps $A[i]$ with the smallest value, and performs min-heapify at the position where the smallest value was previously at.
+
+### 6.3 Building a heap
+
+Build-max-heap builds a max heap by going through half of the heap in a bottom up manner and applying max-heapify each time.
+
+As $A[floor(n/2)+1…n]$ are all max-heaps by them selves are they are all leaves.
+
+So from indices $floor(n/2)$ down to $1$, we run max-heapify on each index.
+
+This produces a max-heap from an unordered array in linear time.
+
+Building a min heap just replaces max-heapify with min-heapify, same occurs.
+
+### 6.4 Heapsort algorithm
+
+The heapsort algorithm takes an array of elements and sorts them in order.
+
+We can sort by increasing order by first building a max heap, then iterating from A.length to 2, we exchange $A[i]$ with $A[1]$, reduce heap size, and run max-heapify on $A[1]$.
+
+We essentially store the sorted part of the array at the end from $A[i+1…n]$, and by exchanging $A[1]$ with $A[i]$, $A[1]$ becomes some small element that needs to be heapified down to make $A[1…i-1]$ a max-heap.
+
+### 6.5 Priority queues
+
+A **priority queue** is a data structure for maintaining a set of $S$ elements, each with an associated value called a **key**.
+
+A **max-priority-queue** supports the following:
+
+$Insert(S,x)$, inserts $x$ into $S$, equivalent to $S=S \cup \{x\}$
+
+$Maximum(S)$ returns the element of $S$ with the max key.
+
+$Extract-max(S)$ removes and returns the element of $S$ with the max key.
+
+$Increase-key(S,x,k)$, increases the value of element $x$'s key to a value $k$ larger than its current value.
+
+A min-priority-queue supports Insert, minimum, extrac-min, and decrease-key. Could be used to simulate event-driven simulators, run an efficient A* search etc.
+
+When using a heap to implement a priority queue, we need to store a **handle** to the corresponding application object in each heap element. The handle could be a pointer or an array index etc.
+
+## 7 Quicksort
+
+On average it is very efficient with a expected run time of $\Theta(n\lg{n})$, and small constant factors. As this is the expected time, no particular input elicits the worse case behavior.
+
+### 7.1 Description of quicksort
+
+Quicksort employs divide and conquer
+
+![quicksortdac](assets/quicksortdac.png)
+
+```pseudocode
+Quicksort(A,p,r)
+if p < r
+	q = Partition(A,p,r)
+	Quicksort(A,p,q-1)
+	Quicksort(A,q+1,r)
+```
+
+```pseudocode
+Partition(A,p,r)
+x = A[r]
+i = p - 1
+for j = p to r - 1
+	if A[j] <= x
+		i = i + 1
+		exchange A[i] with A[j]
+exchange A[i+1] with A[r]
+return i + 1
+```
+
+This partitions the subarray $A[p…r]$ by setting a pivot element $x=A[r]$ first, which ends up being the partitioning element $A[q]$ splitting $A$ into 3 parts, of which two are recursively sorted with quicksort.
+
+We set a left pointer $i$, that holds the position of the element right before the split between $A[p…q-1]$ and $A[q+1…r]$. The right pointer $j$ slowly increments upward and is the right side of the right subarray
+
+The loop invariant of the partition algorithm is as follows
+
+1. If $p\le k \le i$, then $A[k] \le x$
+
+2. If $i+1 \le k \le j - 1$, then $A[k] > x$
+
+3. If $k=r$, then $A[k] = x$
+
+   ![quicksortmaintain](assets/quicksortmaintain.png)
+
+### 7.2 Performance of quicksort
+
+Run time depends on how balanced each partition is.
+
+Worst-case partitioning occurs when the sub problem is split into one of n-1 elements and one of 0 elements
+
+$T(n) = T(n-1) + \Theta(n)$, which is equal to $O(n^2)$
+
+Best-case partitioning occurs when theres an even split each time
+
+$T(n) = 2T(n/2) + \Theta(n)=\Theta(n\lg{n})$ (master theorem!)
+
+**Balanced partitioning** 
+
+The average case run time of quicksort is closer to the best case than worst case.
+
+Consider a partioning algorithm that always splits into 9 to 1 proportional split.
+
+### 7.3 Randomized version of quicksort
+
+Randomization allows us to avoid the worst case run time more often and ensure we achieve the expected running time. A simple change is needed to randomize quicksort without permuting the inputs at all
+
+Instead of setting the pivot to be the original rightmost element, we set the pivot to be a random element by exchanging the rightmost element with a random one in the subarray. This is a **random sampling** technique. This allows us to expect the split to be reasonably balanced on average.
+
+### 7.4 Analysis of quicksort
+
+#### 7.4.1 Worst-case analysis (TODO)
+
+
+
+## 8 Sorting in Linear Time
+
+### 8.1 Lower bounds for sorting (TODO)
+
+It can be proven that any comparison sort (using only comparisons to sort something) is asymptotically bounded by $\Omega({n \lg{n}})$
+
+
+
+### 8.2 Counting Sort
+
+Counting assumes that each of the $n$ elements to be sorted are an integer between $0$ to $k$. (If it was for letters, we can attatch a number to each letter, its numerical representation in code)
+
+Counting sort determines for each input element $x$, the number of elements less than $x$, and uses this information to place $x$ in its correct position in a new output array.
+
+Counting sort first creates an array $C[0…k]$, and makes a linear run through the input array $A[1…n]$ and counts the number of occurences of $0≤i≤k$ and stores it into $C$ where $C[i] =$ the number of occurences of $i$. Then, counting sort loops through $C$ and stores the cumulative occurrences, so $C[i]=C[i-1]$.
+
+Now, from $j=n$ to $j=1$, we store $B[C[A[j]]] = A[j]$
+
+This works as $C[A[j]]$ is the number of elements less than $A[j]$, so storing $A[j]$ into $B[C[A[j]]]$ is correct as it should be larger than all elements $B[1…C[A[j]] - 1]$
+
+Counting sort is **stable**: numbers with the same value appear in the output array in the same order as they do in the input array
+
+Time and space use are $\Theta(n + k)$, as we make $\Theta(n)$ linear runs through array $A$ and $\Theta(k)$ linear runs through $C$. Space is $n+k$ as we create $B$ and $C$, sizes $n$ and $k$ (its not in-place sorting).
+
+This stability is important if we want to order satellite data (other attributes of an element), but is also important for radix sort for which counting sort is a subroutine.
+
+PERSONAL NOTE:
+
+If we are sorting only integers and don't need stability, we can do this with $\Theta(k)$ space and $\Theta(n)$ time
+
+We go up to the step where we create array $C[0…k]$ and count the occurences of $i$ where $C[i]$ equals the number of occurences of $i$. Then we 'sort' $A$ in place by iterating $j$ from $1$ to $n$, and keeping another pointer $p$ for array $C$. If $C[p] > 0$, we store $A[j] = p$ and increment $j$. While $C[p] = 0$, we increment $p$ without incrementing $j$ yet. We terminate if $p > k$ or $j > n$.
+
+This is not really sorting? But uses the fact that two elements $x_i, x_j$ are equal if they are just an integer. (we exclude satellite data).
+
+Clearly it is $\Theta(k)$ space, and we make two loops through $A$, one to count occurences and another to insert numbers in to make $A$ sorted. This method noted cannont be used for radix sorting. 
+
+However, we could make $C$ an array of linked lists. $C[i],C[i].next, C[i].next.next…$ are the elements in the correct order they were in originaly in $A$, all having the same value of $i$. This would allow us to carry satellite data. When sorting $A$, we end up replacing its elements with a copy of itself stored in $C$. After replacing, we put $C[i].next$ as the head of the linked list.
+
+### 8.3 Radix Sort
+
+Radix sort sorts by radix = digit. It sorts by the least significant digit first, and then moves upwards. It sorts $n$ numbers by digit $i$ from the right with a counting sort, which is possible as the digits range from $0$ to $9$ usually (or a certain bit). The stability of counting sort ensures the correct order of sorting for radix sorting.
+
+![radixsort](assets/radixsort.png)
+
+Think of it like sorting dates. We would first sort by year, if there's a tie then sort the ties by month, and if there's a tie sort by day. 
+
+With radix sort, we do 3 counting sorts that are stable.
+
+First we sort by day, and then by month. Due to stability, dates with the same month will automatically be sorted correctly by day as well. Then we sort by year and by the same argument, its all sorted!
+
+Given $n$ $b$-bit numbers, $r≤b$, radix-sort using counting sort takes $\Theta((b/r)(n+2^r))$ time.
+
+Counting sort runs in $\Theta(n+2^r-1)$ time as we can choose an $r$ such that each digit of the $d = b/r$ digits ranges from $0$ to $2^r-1$. (We have $d$ $r$ bits basically, which later combine to the original $b$ bit. Think of a 32-bit word split into 4 8-bit chunks)
+
+$d=b/r$, so total of $b/r$ uses of counting sort, so $\Theta((b/r)(n+2^r))$
+
+If $b < \lfloor\lg{n}\rfloor$, then any $r ≤ b$ achieves $\Theta(n)$
+
+If $b ≥  \lfloor\lg{n}\rfloor$, then $r= \lfloor\lg{n}\rfloor$ achieves the best running time of $\Theta(bn/lg{n})$ to within a constant factor.
+
+### 8.4 Bucket Sort
+
+Bucket sort assumes the input is drawn from a uniform distribution and has a average-case running time of $O(n)$
+
+The basic form of bucket sort takes an $n$ element input array $A$ such that $0≤A[i]<1$, and requires an auxiliary array $B[0…n-1]$ of linked lists (buckets).
+
+![image-20190506153940713](assets/image-20190506153940713.png)
+
+Every line takes at most $\Theta(n)$ time (concatenating takes $O(n)$ as well because they are linked lists, at most $n$ lists to combine)
+
+Line 8 takes $O(n(2-1/n))$ time, which can be proven by analyzing $E[n_i^2]$, where $n_i$ is the random variable of the number of elements in $B[i]$. We analyze $E[n_i^2]$ as insertion sort takes $O(n^2)$ worst time and we wish to find the average case run time. We can compute it by also introducing a random variable $X_{ij} = I\{A[j] \text{ falls in bucket } i\}$
+
+and seeing that the sum of all the $X_{ij}$ for fixed $i$ gives $n_i$
 
 
 

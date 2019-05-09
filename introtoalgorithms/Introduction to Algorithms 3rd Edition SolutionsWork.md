@@ -11,7 +11,7 @@ Given a set S of n integers and another integer x, we may determine whether or n
 1. Sort S in ascending order with merge-sort. 
 2. Then then using two pointers $i,j$ while $i < j$, check if $S[i]+S[j]=x$ , if sum is larger, then decrease $j$ by 1, if sum is smaller, increase $i$ by 1
 
-(While) Loop Invariant: ?
+### (While) Loop Invariant: ?
 
 ### 2-1
 
@@ -1067,4 +1067,112 @@ $k=1$, worst-case run time is $n$, expected run time is $(n+1)/2$
 $k\geq1$, worst-case and average run time is $(n+1)/(k+1)$
 
 
+
+### 6-2
+
+#### 6-2.a
+
+A $d$-ary heap can be represented by following the order of the elements in the heap from first to final level, left to right on each level, incrementing the index one by one.
+
+Index $i$ has $d$ children at $di-d+2,di-d+3,di-d+4,…,di+1$
+
+#### 6-2.b
+
+$d$-ary heap with $n$ elements with a height $h$ has $n$ such that
+$$
+d_0+d_1+...+d^{h-1}\lt n \leq d^0+d^1+...+d^{h}\\
+(d^h-1)/(d-1) < n \le (d^{h+1}-1)/(d-1) \\
+h \lt \log_d{(n(d-1)+1)} \le h+1 \\
+\lceil{\log_d{(nd-n+1)}}\rceil = h \\
+\Theta(\lg{n}/\lg{d}) = h
+$$
+
+#### 6-2.c
+
+Extract-max for a d-ary heap involves returning $A[1]$ and exchanging $A[1]$ (the largest element) with $A[A.heap\_size]$. We then need to run Max-heapify$(A,1)$ for the $d$-ary heap.
+
+The only difference compared to a binary heap is that for Max-heapify(A,i), at index $i$, you need to check which of the $d$ children and $A[i]$ have the largest value and swap those two, then continue.
+
+Max-heapify normally takes $O(h)$ time, not considering the twp steps taken to find the max value of the children and the element. So the modified max-heapify takes $O(d \lg{n}/\lg{d})$
+
+### 6-3
+
+#### 6-3.a
+
+#### 6-3.b
+
+If $Y[1,1]$ is nonexistent, then $Y$ is empty as rows and columns are sorted left to right and top to bottom, and 1,1 if a nonexistement element is at the very left and top of row 1 and column 1, there are no other elements in those rows and columns. Similar recursive argument applies for rest of rows and columns.
+
+If $Y[m,n] < \infty$ (it exists), then there must be a number at $Y[i,n]$ for $i=1…m$, and a number at $Y[m,j]$, for $j=1…n$. Similar recursive argument applies for rest of rows and columns. As a number at $Y[i,n]$ implies theres elements at $Y[i,j]$, for $j=1…n$ etc.
+
+#### 6-3.c
+
+Extract-min returns $Y[1,1]$
+
+```pseudocode
+Extract-min(Y)
+return Y[1,1]
+Heapify(Y[1...m,1...n],[1,1])
+```
+
+```pseudocode
+Heapify(Y,[i,j])
+n = Y.rows
+m = Y.columns
+smallest = [i,j]
+if Y[i,j] > Y[i+1,j]
+	smallest = [i+1,j]
+if Y[smallest] > Y[i,j+1]
+	smallest = [i,j+1]
+if (smallest == [i,j])
+	
+else
+	exchange Y[i,j] with Y[smallest]
+	Heapify(Y[smallest[0],smallest[1]]) 
+```
+
+To heapify, we compare $Y[i,j]$ with its neighbors and find the smallest one, and exchange them. If $Y[i,j]$ is the smallest one, we terminate as we are finished.
+
+Each use of Heapify in the worst case has run time $T(p) = T(p-1) + O(1)$, implying extract-min runs in $T(m+n) = O(m+n)$
+
+#### 6-3.d
+
+Inserting a new element into a mxn young tableau. Insert element at bottom right square, and keep shifting it upwards and leftwards if its smaller than the element above it or to the left of it.
+
+#### 6-3.e
+
+We can build the sorted array $A$ given a $Y$ tableau
+
+```pseudocode
+Young-tableau-sort(Y)
+A = new array of size n^2
+for i = 1 to n^2
+	A[i] = Y[1,1]
+	Y[1,1] = infinity
+	Heapify(Y,[1,1])
+```
+
+Heapify is run $n^2$ times, and each heapify takes $O(n+n)=O(n)$ time, so a total of $O(n^3)$
+
+Given an unsorted array of $n^2$ elements in $A$, we can sort it in $O(n^3)$ by first inserting all $n^2$ elements in time $n^2O(n+n)=O(n^3)$ time. We can then run young-tableau-sort, which also runs in $O(n^3)$, (and instead of creating a new array $A$, we can sort in place)
+
+#### 6-3.f
+
+We make the observation that if we start from the lower left corner, moving up or to the right, the strictly decrease or increase the value of the current square
+
+```pseudocode
+Search-young-tableau(Y,x)
+p = Y.rows + Y.columns
+checks = 0
+i = 1, j = y.columns //bottom left corner
+while (checks != p)
+	if Y[i,j] == x
+		return true (or [i,j])
+	if Y[i,j] < x
+		i += 1
+	else
+		j -= 1
+	checks += 1
+return NIL
+```
 
