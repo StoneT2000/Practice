@@ -921,5 +921,85 @@ Line 8 takes $O(n(2-1/n))$ time, which can be proven by analyzing $E[n_i^2]$, wh
 
 and seeing that the sum of all the $X_{ij}$ for fixed $i$ gives $n_i$
 
+## 9 Medians and Order Statistics
 
+The $i$th order statistic of a set of $n$ elements is the $i$ smallest element. The minimum is the first order statistic and the maximum is the $n$th order statistic. 
+
+The lower median is $i=\lfloor{(n+1)/2}\rfloor$ and the upper median is $i=\lceil{(n+1)/2}\rceil$
+
+(The Median in these notes refers to the lower median)
+
+The problem of finding the $i$th order statistic can easily be done in $O(n\lg{n})$ time by sorting and then finding the $i$th index in the array.
+
+### 9.1 Minimum and Maximum
+
+The optimal method to find the minimum or maximum is by making $n-1$ comparisons. Suppose we have a tournament of the elements. Each match is a comparison of the elements to determine which is smaller. As every element except the winner must lose a match, we conclude that $n-1$ comparisons are necessary to determine the minimum.
+
+Sometimes we need to the find the simultaneous minimum and maximum of a set of $n$ elements, e.g when we want to scale a display on a graph when displaying the $n$ elements, we need to find the range of $x$ and $y$ values. Indepdently finding the min and max can take $2n-2$ comparisons. We can do faster
+
+For a set of $n$ elements, we look at each pair and we compare the smaller of the pair with the minimum and the larger of the pair with the maximum for a total of 3 comparisons per pair and a total of $3 \lfloor{n/2}\rfloor$ comparisons.
+
+### 9.2 Selection in Expected Linear Time
+
+A randomized selection algorithm based off of quicksort can solve this.
+
+Using the randomized-partition algorithm from quick sort, which takes a random pivot A[q] from A[p…r] and partitions the subarray A[p…r] into two parts such that A[p…q-1] is ≤ A[q] and A[q] ≤ A[q+1…r]
+
+When looking for the $i$th order statistic, if the number of elements in the lower array with $A[q]$, which is $A[p…q]$, having $k=q-p + 1$ elements, is equal to $i$, then $A[q]$ is the $i$th order statistic as it is larger than $i-1=k-1$ elements and smaller than the rest. If $i < k$, that means the value we are lookign for lies in the lower array and we recursively solve for that by looking for the $i$th order statistic in $A[p…q-1]$. Otherwise, it lies in the larger array, and we now look for the $i-k$ th order statistic of $A[q+1…r]$, which would be the $i$th order statistic of $A[p…r]$
+
+
+
+### 9.3 Selection in Worst Case Linear Time
+
+Like randomized selection, we find the desired element by recursively partioning the array. However, we gurantee a good split through partioning to avoid edge cases that cause $O(n^2)$ run time for randomized selection (if we kept partioning around the largest element as an example and we wanted to find the minimum).
+
+Selection Algorithm:
+
+1. Divide the n elements of the input array into $\lfloor n/5\rfloor$ groups of 5 elements each
+
+   and at most one group made up of the remaining $n$ mod $5$ elements.
+
+2. Find the median of each of the $\lceil n/5 \rceil$ groups through insertion sorting them and picking the middle element (or lower median for the extra group if needed)
+
+3. Use the selection algorithm recursively to find the median $x$ of the medians found in step 2 (lower median chosen if needed)
+
+4. Partition the input array around $x$ similar to the one in quicksort, partioning it such that the lower array $A[p…q-1]$ ≤ $x$ ≤$A[q+1…r]$ ($A[q] = x$). Letting $k$ be one more than the number of elements in the lower array, then $x$ is the $k$th order statistic and 
+
+5. if $k=i$, our desired order statistic, we are done. Otherwise if $i < k$, we recursively find the $i$th order statistic in the lower array or the $i-k$th smallest element in the upper array if $i > k$.
+
+#### 9.3.1 ANALYZING SELECTION IN WORST CASE O(N) TIME
+
+When we find $x$, the median of the medians, we immedietely know that $x$ is smaller than half of the $\lceil n/5 \rceil$ medians found, and each group the medians came frame, have at least 3 elements larger than $x$ as their median is larger than $x$, and two more values in the groups of 5 are larger than the median. The only exceptions to groups that contribute at least 3 elements larger than $x$ are the remainder edge group that doesn't have 5 elements in the group $x$ is in itself.
+
+So we can place a lower bound on the number of elements that are larger than $x$, ignoring the 2 exception groups, it is
+$$
+3(\lceil{\frac{1}{2}\lceil{n/5}\rceil}\rceil-2) \ge 3n/10 - 6
+$$
+(It's kind of a weak bound for smaller $n$ like $n=28$, but for larger values, it doesn't matter and this algorithm is likely better for finding the order statistics in large arrays due to some constant factors)
+
+Similarly, we can conclude that at least $3n/10 - 6$ elements are smaller than $x$.
+
+This implies that our partition is always at least $3n/10 -6$ and $7n/10 + 6$, or better (better being its a much more balanced partition, more even split, which allows us to select faster as we eliminate more possibilities on average).
+
+Step 1, 2, 4 take $O(n)$ time
+
+Step 2 takes $O(n)$ calls to insertion sort running in $O(5) = O(1)$ time.
+
+Step 3 takes $T(\lceil n/5 \rceil)$ time.
+
+Step 5 takes at most $T(7n/10 + 6)$ time in the worst case as our order statistic might be in the array that has more elements.
+
+There's also a magic constant $140$, where if $n < 140$, the algorithm is $O(1)$, otherwise
+
+$$T(n) = T(\lceil n/5 \rceil)  + T(7n/10 + 6) + O(n) \quad n ≥ 140$$
+
+By substitution, we can show its linear time.
+
+$T(n) \le cn/5 + c + 7cn/10 + 6c + an$
+
+$T(n) \le cn + (-cn/10 + 7c + an) \le cn$
+
+Which is valid provided $-cn/10 + 7c +an \le 0$, which implies $c\ge 10a(n/(n-70))$ when $n > 70$
+
+We assumed $n \ge 140$, so $n/(n-70) \le 2$, so $c\ge 20 a$ is sufficient. Ok wow, in fact 140 isnt special at all, we could have chosen any value above 70 and then choose $c$ accordingly...
 

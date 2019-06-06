@@ -77,12 +77,18 @@ public class Astar {
             for (int i = 0; i < neighbors.size(); i++) {
                 Position newPos = neighbors.get(i);
                 if (inMap(newPos.x, newPos.y)) {
-                    //We use these cached positions as we to achieve O(1) look up in visited and frontier to see if its already searched or in frontier
+                    //We use these cached positions as we to achieve O(1) look up in visited and
+                    //frontier to see if its already searched or in frontier
                     Position cachedNewPos = this.map[newPos.y][newPos.x];
                     //Check if position is passable, hasn't been visited, and isn't in the frontier already.
                     if (cachedNewPos.passable){
                         int newCost = newPos.cost;
                         if ((!visited.contains(cachedNewPos) && !frontier.contains(cachedNewPos)) || newCost < cachedNewPos.cost) {
+                            //We add a new position to the frontier if
+                            //The cost is lower, we reset the cost of the old position reached from another path,
+                            //so its parent and cost are optimal
+                            //If it hasn't been visited or wasn't added to the frontier yet, we look at it.
+
                             cachedNewPos.cost = newPos.cost;
                             cachedNewPos.priority = cachedNewPos.cost + QMath.dist(cachedNewPos, this.end);
                             cachedNewPos.parent = checkPos;
@@ -105,8 +111,6 @@ public class Astar {
         while (cPos.parent != null) {
             path.add(cPos);
             cPos = cPos.parent;
-
-
         }
         return path;
         //System.out.println(path.toString());
