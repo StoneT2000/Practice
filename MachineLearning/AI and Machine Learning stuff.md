@@ -73,3 +73,73 @@ Has an expected approximation ratio of $O(\log{k})$, which means the returned so
 
 
 
+## 3. Neural Networks
+
+Modeled after the brain and its use of neurons
+
+### 3.1 Perceptrons
+
+Perceptrons are a type of artificial neuron. They take several binary inputs and produce a single binary output.
+
+Nowdays, its more common to use other artificial neurons such as the sigmoid neuron.
+
+A perceptron is has a binary output, a 0 or 1, e.g Is the weather good? 1 = good, 0 = bad.
+
+The final output layer takes a weighted sum of the outputs from the previous layer (its inputs), to make a decision. If the final layer consists of perceptrons, it relies on a threshold to determine a 0 or 1.
+
+$w\cdot x + b ≤ 0$ output 0
+
+$w\cdot x + b > 0$ output 1
+
+### 3.2 Sigmoid Neurons
+
+In order to learn, a step function like the perceptron wouldn't work realistically.
+
+Learning is essentially altering the weights in the network with the goal predicting the test set and unseen data more accurately.
+
+So a small change in weight, should cause a small change in output, not a sharp one as would be with a perceptron.
+
+A sigmoid neuron works like a perceptron, but with a different function
+
+$\sigma{(w\cdot x + b)}$
+
+Where $\sigma{(z)} = \frac{1}{1+e^{-z}}$, the sigmoid function
+
+(Note that $w,x,b$ are vectors)
+
+Due to the differentiability and smoothness of the sigmoid function, small changes in weight will lead to gradual changes in the final output vector.
+
+### 3.3 Architecture
+
+### ![neuralnetworkbase](assets/neuralnetworkbase-0442014.png)
+
+Above is a model of a neural network, with a input layer on the left, output layer on the right, hidden layers in between the input and output layer
+
+When the output of one layer is used as the input for the next, this is known as a **feedforward** neural network. It's like a directed graph. **Recurrent neural networks** are possible, when there are loops in the graph, but have been less influential as as of now, they are less powerful than feedforward.
+
+There's some intuition behind hidden layers. However, it requires experimentation sometimes.
+
+When classifying digits using that MNIST data, it might not be obvious what each hidden neuron contributes to the final decision. This is partly due to how each digit in itself is not very unique anyway compared to other digits when looking at the pixel representation input data.
+
+Classifying digits can be down with a normal neural network (not deep). Backpropagation and gradient descent are more than enough to achieve fairly high accuracy.
+
+![tikz12](assets/tikz12.png)
+
+The above neural network would work. One might ask why have 10 output layers when 4 output layers should suffice as we can represent digits as binary numbers (1100 = 6)
+
+The main issue is the hidden layers would be 'confused' as to how to alter their weights properly. The minimum cost might not be that small either. Think like a human. What relation do binary numbers have with decimal digits visually? Almost nothing. Hence, it makes no sense to classify in terms of binary numbers. It is possible to take that output layer and then feed it to a 4 neuron layer representing the binary numbers, because now, it makes sense. If we think like a human brain, those output layers are the actual digits, not just the visual image. The actual digit has a mathematical relation to the binary numbers, unlike the pixel image, which likely has a much smaller relation (basically way too complex to relate like the curve in the 6 to the first two one's in its binary representation).
+
+
+
+However, suppose we wanted to classify if an image has a face or not.
+![neuralnetworkface](assets/neuralnetworkface.png)
+
+The rectangle boxes denote sub-networks that use the input data as shown to produce an output (best if it was from an activation function)
+
+These sub-networks can then further be decomposed into more sub-networks as so
+
+![tikz15](assets/tikz15.png)
+
+Eventually, they will be decomposed enough to the point that our inputs are more than enough data to accurately determine the result of the sub-network, which then contributes to the other sub-networks and the final neural net and make a better decision. Without these sub-networks, the learning algorithm might take much longer to generate the correct weights, and may even be incapable of good classification due to a lack of structure in the hidden layers. Networks with 2 or more hidden layers are called **deep neural networks**.
+
+For deep neural networks, back propagation and stochastic gradient descent, while effective for normal neural networks, trained slowly for deep ones.
