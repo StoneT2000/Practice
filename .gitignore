@@ -1,2 +1,7 @@
 
 .DS_Store
+Python/ML/Neural Networks/FlowerClassification/flower_photos
+Python/ML/Neural Networks/FlowerClassification/setup_photos
+Python/ML/Neural Networks/FlowerClassification/models-v0
+*.hdf5
+*.h5

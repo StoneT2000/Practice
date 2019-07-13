@@ -1,0 +1,42 @@
+:root {
+  --main1: #2995f4;
+  --w:#fefefe;
+  --sg1:rgb(51,56,68);
+}
+a:hover {
+  text-decoration: none;
+}
+a {
+  color:var(--sg1);
+  padding-bottom: 2px;
+  position: relative;
+  font-style: normal;
+  cursor: pointer;
+}
+a:hover,a:focus {
+  text-decoration: none;
+  color:var(--sg1);
+}
+a::before {
+  content: "";
+  left: 0;
+  background-color: var(--sg1);
+  width: 0%;
+  height: 1px;
+  top: 1.4em;
+  position: absolute;
+  z-index: 2;
+  transition: background-color 0.2s, height 0.2s, top 0.2s, width 0.2s;;
+}
+a:hover::before, a:focus::before {
+  content: "";
+  left: 0;
+  background-color: var(--sg1);
+  width: 100%;
+  height: 1px;
+  top: 1.4em;
+  position: absolute;
+  z-index: 2;
+  transition: background-color 0.2s, height 0.2s, top 0.2s, width 0.2s;
+  text-decoration: none;
+}

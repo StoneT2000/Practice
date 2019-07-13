@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a256ccfa-d9bb-4faa-86c7-cf1dbdd726a8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Stone.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Hackerank/Solution.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Hackerank/Solution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Solution.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Solution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PathingAlgorithms/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PathingAlgorithms/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stone.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../PathingAlgorithms/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../PathingAlgorithms/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PathingAlgorithms/out/production/PathingAlgorithms/util/Astar.class" beforeDir="false" afterPath="$PROJECT_DIR$/../PathingAlgorithms/out/production/PathingAlgorithms/util/Astar.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../PathingAlgorithms/src/util/Astar.java" beforeDir="false" afterPath="$PROJECT_DIR$/../PathingAlgorithms/src/util/Astar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../introtoalgorithms/Introduction To Algorithms 3rd Edition Notes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../introtoalgorithms/Introduction To Algorithms 3rd Edition Notes.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Python/Neural Networks/MNISTDigits/cnn_mnist_datagen.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Python/Neural Networks/MNISTDigits/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Python/Neural Networks/MNISTDigits/main.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,10 +35,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Stone.java">
+        <entry file="file://$PROJECT_DIR$/src/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="9" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+            <state relative-caret-position="135">
+              <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Point.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -61,8 +69,9 @@
       <list>
         <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
-        <option value="$PROJECT_DIR$/src/Solution.java" />
         <option value="$PROJECT_DIR$/src/Stone.java" />
+        <option value="$PROJECT_DIR$/src/Point.java" />
+        <option value="$PROJECT_DIR$/src/Solution.java" />
       </list>
     </option>
   </component>
@@ -73,8 +82,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="154" />
-    <option name="y" value="29" />
+    <option name="x" value="98" />
+    <option name="y" value="23" />
     <option name="width" value="1400" />
     <option name="height" value="987" />
   </component>
@@ -84,6 +93,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -100,14 +111,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1558161521296" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1562916567961" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -173,17 +182,18 @@
       <workItem from="1558084797643" duration="7559000" />
       <workItem from="1558143879981" duration="6482000" />
       <workItem from="1558591490245" duration="210000" />
+      <workItem from="1562915875331" duration="216000" />
+      <workItem from="1562916110115" duration="469000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55766000" />
+    <option name="totallyTimeSpent" value="56451000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="154" y="29" width="1400" height="987" extended-state="0" />
-    <editor active="true" />
+    <frame x="98" y="23" width="1400" height="987" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3041237" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.31296024" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -243,10 +253,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Stone.java">
+    <entry file="file://$PROJECT_DIR$/src/Point.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="9" selection-start-line="1" selection-start-column="9" selection-end-line="1" selection-end-column="9" />
+        <state relative-caret-position="150">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
         </state>
       </provider>
     </entry>

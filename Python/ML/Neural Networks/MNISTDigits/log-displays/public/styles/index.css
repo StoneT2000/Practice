@@ -1,0 +1,22 @@
+html,body {
+  font-family:'Open Sans', Helvetica, sans-sans-serif;
+}
+main ul li {
+  list-style: none;
+  margin-top: 0.5rem;
+}
+
+#data {
+  padding-left: 0;
+  color:var(--sg1);
+}
+#navcolumn {
+  background-color:var(--main1);
+}
+#datacolumn {
+  
+}
+.chart-wrapper {
+  height:500px;
+  width:500px;
+}
